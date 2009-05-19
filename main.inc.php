@@ -1,0 +1,34 @@
+<?php /*
+Plugin Name: SmiliesSupport
+Version: 2.0.a
+Description: Allow add Smilies for comments and descriptions. / Permet d'ajouter des Smilies pour les commentaires et les descriptions.
+Plugin URI: http://phpwebgallery.net/ext/extension_view.php?eid=159
+Author: Atadilo
+Author URI: http://www.phpwebgallery.net
+*/
+
+if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+
+include_once(dirname(__FILE__).'/smiliessupport.inc.php');
+
+add_event_handler('init', 'init_smiliessupport');
+add_event_handler('render_comment_content', 'SmiliesParse', 60);
+add_event_handler('loc_begin_picture', 'set_smiliessupport_page');
+
+function init_smiliessupport()
+{
+  remove_event_handler('render_comment_content', 'parse_comment_content');
+}
+
+if (script_basename() == 'admin')
+{
+  add_event_handler('get_admin_plugin_menu_links', 'smiliessupport_admin_menu');
+
+  function smiliessupport_admin_menu($menu) {
+      array_push($menu,
+        array('NAME' => 'SmiliesSupport',
+              'URL' => get_admin_plugin_menu_link(dirname(__FILE__) . '/smiliessupport_admin.php')));
+      return $menu;
+  }
+}
+?>
