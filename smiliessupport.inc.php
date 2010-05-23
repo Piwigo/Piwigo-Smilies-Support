@@ -8,7 +8,7 @@ function set_smiliessupport_page()
 
   if (!isset($pwg_loaded_plugins['bbcode_bar']))
   {
-    $lang['comment'] .= SmiliesTable();
+    $lang['Comment'] .= SmiliesTable();
   }
 }
 

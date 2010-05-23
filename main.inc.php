@@ -1,10 +1,10 @@
-<?php /*
-Plugin Name: SmiliesSupport
-Version: 2.0.a
-Description: Allow add Smilies for comments and descriptions. / Permet d'ajouter des Smilies pour les commentaires et les descriptions.
-Plugin URI: http://phpwebgallery.net/ext/extension_view.php?eid=159
-Author: Atadilo
-Author URI: http://www.phpwebgallery.net
+<?php
+/*
+Plugin Name: Smilies Support
+Version: auto
+Description: Allow add Smilies for comments and descriptions.
+Plugin URI: http://piwigo.org/ext/extension_view.php?eid=159
+Author: Atadilo & P@t
 */
 
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
@@ -26,7 +26,7 @@ if (script_basename() == 'admin')
 
   function smiliessupport_admin_menu($menu) {
       array_push($menu,
-        array('NAME' => 'SmiliesSupport',
+        array('NAME' => 'Smilies Support',
               'URL' => get_admin_plugin_menu_link(dirname(__FILE__) . '/smiliessupport_admin.php')));
       return $menu;
   }
