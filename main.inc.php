@@ -11,14 +11,8 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 include_once(dirname(__FILE__).'/smiliessupport.inc.php');
 
-add_event_handler('init', 'init_smiliessupport');
 add_event_handler('render_comment_content', 'SmiliesParse', 60);
 add_event_handler('loc_begin_picture', 'set_smiliessupport_page');
-
-function init_smiliessupport()
-{
-  remove_event_handler('render_comment_content', 'parse_comment_content');
-}
 
 if (script_basename() == 'admin')
 {
