@@ -1,19 +1,20 @@
 div #smiliesdiv {   
     position:absolute; 
 	z-index:1000; 
-	width:10px;
 	visibility:hidden; 
 }
 
 .smiliestable {
     background: buttonface;
-    border-top: 1px solid;
-    border-left: 1px solid;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
+    border: 1px solid;
     margin: 1;
 }
 
-#smiliesdiv IMG {
+#smiliesdiv img {
   cursor: pointer;
+}
+
+.properties textarea {
+	width:80%;
+	margin:0 10%;
 }
