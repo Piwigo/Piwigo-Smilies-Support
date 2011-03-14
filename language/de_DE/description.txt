@@ -1,0 +1,1 @@
+Erlaubt das Hinzufügen von Smilies in den Kommentaren und den Beschreibungen.
