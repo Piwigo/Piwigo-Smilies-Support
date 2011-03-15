@@ -3,7 +3,7 @@
 {combine_css path=$ROOT_URL|@cat:"plugins/SmiliesSupport/smiliessupport_page.css"}
 
 <div width="500pt">
-	<img id="allsmilies" src="{$REPRESENTANT}" title="All Smilies" onmouseover="jQuery('#smiliesdiv').css('visibility','visible');">
+	<img id="allsmilies" src="{$REPRESENTANT}" title="{'All Smilies'|@translate}" onmouseover="jQuery('#smiliesdiv').css('visibility','visible');">
 
 	<div id="smiliesdiv" >
 		<table class="smiliestable" 
