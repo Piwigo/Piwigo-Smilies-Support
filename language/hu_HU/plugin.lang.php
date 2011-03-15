@@ -1,7 +1,7 @@
 <?php
 
-$lang['smilies_dir'] = "Hangulatjelek elérési útja";
-$lang['nb_columns'] = "Oszlopok száma";
-$lang['representant'] = "Képviselo";
+$lang['smilies_dir'] = "Hangulatjelek elÃ©rÃ©si Ãºtja";
+$lang['nb_columns'] = "Oszlopok szÃ¡ma";
+$lang['representant'] = "KÃ©pviselo";
 
 ?>
