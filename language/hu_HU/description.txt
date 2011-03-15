@@ -1,1 +1,0 @@
-Lehetővé teszi hangulatjelek használatát hozzászólásokban és leírásokban.
