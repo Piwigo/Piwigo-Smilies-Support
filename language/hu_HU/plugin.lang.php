@@ -4,7 +4,7 @@ $lang['smilies_dir'] = "Hangulatjelek elérési útja";
 $lang['nb_columns'] = "Oszlopok száma";
 $lang['representant'] = "Képviselő";
 $lang['All Smilies'] = "Összes hangulatjel";
-$lang['smilies_file_help'] = "By default when a user clicks on a smiley, Smilies Support adds a keyword matching the name of the file (smile.png -> :smile:).<br>
-	But here you can configure other strings to be replaced. Each smilies folder has its own <i>smilies.txt</i> file.";
+$lang['smilies_file_help'] = "Alapértelmezésben, amikor egy felhasználó rákattint egy hangulatjelre, a Smilies Support hozzáad egy kulcsszóegyezőséget a fájl nevéhez. (smile.png -> :smile:).<br>
+	Lehetőség van beállítani másik stringet a kicseréléséhez. Minden egyes hangulatjel könyvtár rendelkezik egy saját <i>smilies.txt</i> fájllal.";
 
 ?>
