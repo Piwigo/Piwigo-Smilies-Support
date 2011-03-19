@@ -14,7 +14,9 @@
 ;-(		pleure.gif
 oO		perplexe.gif
 Oo		perplexe.gif
+OO		perplexe.gif
 :o		surpris.gif
 :O		surpris.gif
 :-o		surpris.gif
 :-O		surpris.gif
+<3		wub.gif

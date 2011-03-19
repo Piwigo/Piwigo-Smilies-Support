@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Smilies Support
-Version: 2.2.0
+Version: 2.2.a
 Description: Allow add Smilies for comments and descriptions.
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=159
 Author: Atadilo & P@t & Mistic
@@ -15,7 +15,14 @@ define('SMILIES_PATH' , PHPWG_PLUGINS_PATH . SMILIES_DIR . '/');
 include_once(SMILIES_PATH.'smiliessupport.inc.php');
 
 add_event_handler('render_comment_content', 'SmiliesParse', 60);
-add_event_handler('loc_begin_picture', 'set_smiliessupport_page');
+add_event_handler('loc_after_page_header', 'add_smiliessupport');
+
+function add_smiliessupport() {
+	global $page;
+	if ($page['body_id'] == 'theCommentsPage' OR $page['body_id'] == 'thePicturePage') {
+		set_smiliessupport_page();
+	}
+}
 
 if (script_basename() == 'admin')
 {

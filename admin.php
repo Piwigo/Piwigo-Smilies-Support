@@ -8,41 +8,37 @@ $conf_smiliessupport = explode("," , $conf['smiliessupport']);
 // Enregistrement de la configuration
 if (isset($_POST['submit']))
 {
-	if (!isset($_POST['text1'])) $_POST['text1'] = 'plugins/SmiliesSupport/smilies';
-	if (!isset($_POST['text2'])) $_POST['text2'] = '5';
-	if (!isset($_POST['text3'])) $_POST['text3'] = 'sourire.gif';
+	// the smilies.txt file is not saved if the directory is changed
+	if (isset($_POST['text1']) AND $_POST['text1'] != $conf_smiliessupport[0]) {
+		$not_save_file = true;
+	}
 	
 	$conf_smiliessupport = array(
-		$_POST['text1'],
-		$_POST['text2'],
-		$_POST['text3']
+		isset($_POST['text1']) ? $_POST['text1'] : 'plugins/SmiliesSupport/smilies',
+		isset($_POST['text2']) ? $_POST['text2'] : '5',
+		isset($_POST['text3']) ? $_POST['text3'] : 'sourire.gif',
 	);
+	
+	if (empty($_POST['text'])) $_POST['text'] = ':)		sourire.gif';
 		
-    $new_value_smiliessupport = implode ("," , $conf_smiliessupport);
+    $new_value_smiliessupport = implode (",", $conf_smiliessupport);
     $query = 'UPDATE ' . CONFIG_TABLE . '
-	SET value="' . $new_value_smiliessupport . '"
-	WHERE param="smiliessupport"';
+		SET value="' . $new_value_smiliessupport . '"
+		WHERE param="smiliessupport"';
     pwg_query($query);
     
-	$smilies_file = PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/smilies.txt';	    
+	if (!isset($not_save_file)) {
+		$smilies_file = PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/smilies.txt';	    
 
-	if (file_exists($smilies_file))
-	{
-		if  (@copy($smilies_file , get_filename_wo_extension($smilies_file).'.bak'))
-		{
-			$file = @fopen($smilies_file , "w");
-			fwrite($file , stripslashes($content_file = $_POST['text']));
-			fclose($file);        
-			array_push($page['infos'], l10n('Configuration saved.'));
+		if (file_exists($smilies_file)) {
+			@copy($smilies_file, get_filename_wo_extension($smilies_file).'.bak');
 		}
-		else
-		{
-			array_push($page['errors'], l10n('Configuration not saved. (copy : '.$smilies_file.' to '.get_filename_wo_extension($smilies_file).'.bak').')' );
+		
+		if (@file_put_contents($smilies_file, stripslashes($_POST['text']))) {  
+			$page['infos'][] = l10n('Information data registered in database');
+		} else {
+			$page['errors'][] = l10n('File/directory read error').' &nbsp; '.$smilies_file;
 		}
-	}
-	else
-	{
-		array_push($page['errors'], l10n('Configuration not saved. (file exists : '.$smilies_file.')' ));
 	}
 }
 
@@ -54,12 +50,11 @@ include_once(SMILIES_PATH . '/smiliessupport.inc.php');
 $template->assign('SMILIESSUPPORT_PAGE', SmiliesTable($conf_smiliessupport));
 
 $smilies_file = PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/smilies.txt';
-$content_file = '';
+$content_file = null;
 
-if (file_exists($smilies_file))
-{
+if (file_exists($smilies_file)) {
 	$content_file = file_get_contents($smilies_file);
-	$template->assign(array('CONTENT_FILE' =>$content_file ));
+	$template->assign(array('CONTENT_FILE' => $content_file));
 }
 	
 $template->set_filename('smiliessupport_conf', dirname(__FILE__).'/smiliessupport_admin.tpl');

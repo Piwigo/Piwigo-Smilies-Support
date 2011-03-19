@@ -1,5 +1,33 @@
 {combine_script id='jquery'}
+{combine_script id='jquery.cluetip' require='jquery' path='themes/default/js/plugins/jquery.cluetip.js'}
 {include file='include/autosize.inc.tpl'}
+
+{footer_script}
+{literal}
+	jQuery().ready(function(){
+		// Cluetip
+		jQuery('.cluetip').cluetip({
+			width: 550,
+			splitTitle: '|'
+		});
+	});
+{/literal}
+{/footer_script}
+
+{html_head}
+<style type="text/css">
+	legend .cluetip {ldelim}
+		text-align:center;
+		margin:20px 0 -10px 0;
+		font-size:1.2em;
+	}
+	.cluetip:after {ldelim}
+		margin-left:5px;
+		vertical-align:top;
+		content:url('{$themeconf.admin_icon_dir}/help.png');
+	}
+</style>
+{/html_head}
 
 <div class="titrePage">
 	<h2>Smilies Support</h2>
@@ -28,7 +56,7 @@
 	</fieldset>
 	
 	<fieldset>
-		<legend>smilies.txt</legend>
+		<legend><span class="cluetip" title="smilies.txt|{'smilies_file_help'|@translate}">smilies.txt</legend>
 		<textarea rows="5" name="text">{$CONTENT_FILE}</textarea>
 	</fieldset>	
 	
