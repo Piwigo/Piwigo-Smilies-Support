@@ -1,8 +1,7 @@
-{combine_script id='jquery'}
 {combine_script id='jquery.cluetip' require='jquery' path='themes/default/js/plugins/jquery.cluetip.js'}
 {include file='include/autosize.inc.tpl'}
 
-{footer_script}
+{footer_script require="jquery.cluetip"}
 {literal}
 	jQuery().ready(function(){
 		// Cluetip

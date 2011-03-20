@@ -1,6 +1,6 @@
 {combine_script id="jquery"}
-{combine_script id="smiliessupport" path=$ROOT_URL|@cat:"plugins/SmiliesSupport/smiliessupport.js"}
-{combine_css path=$ROOT_URL|@cat:"plugins/SmiliesSupport/smiliessupport_page.css"}
+{combine_script id="smiliessupport" path=$SMILIES_PATH|@cat:"template/smiliessupport.js"}
+{combine_css path=$SMILIES_PATH|@cat:"template/smiliessupport_page.css"}
 
 <div width="500pt">
 	<img id="allsmilies" src="{$REPRESENTANT}" title="{'All Smilies'|@translate}" onmouseover="jQuery('#smiliesdiv').css('visibility','visible');">

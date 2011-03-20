@@ -32,7 +32,8 @@ function SmiliesTable($new_conf=null)
 	}
 
 	$cnt = 1;
-	$template->set_filename('smiliessupport_page', dirname(__FILE__).'/smiliessupport_page.tpl');
+	$template->assign('SMILIES_PATH', SMILIES_PATH);
+	$template->set_filename('smiliessupport_page', dirname(__FILE__).'/template/smiliessupport_page.tpl');
 	$template->assign(array('REPRESENTANT' => PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$conf_smiliessupport[2]));
 
 	if ($handle = opendir(PHPWG_ROOT_PATH.$conf_smiliessupport[0]))

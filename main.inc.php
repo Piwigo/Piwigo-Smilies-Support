@@ -31,7 +31,7 @@ if (script_basename() == 'admin')
 	{
 		array_push($menu, array(
 			'NAME' => 'Smilies Support',
-			 'URL' => get_root_url().'admin.php?page=plugin-' . SMILIES_DIR));
+			'URL' => get_root_url().'admin.php?page=plugin-' . SMILIES_DIR));
 		return $menu;
 	}
 }
