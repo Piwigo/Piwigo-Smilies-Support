@@ -18,9 +18,12 @@ add_event_handler('render_comment_content', 'SmiliesParse', 60);
 add_event_handler('loc_after_page_header', 'add_smiliessupport');
 
 function add_smiliessupport() {
-	global $page;
-	if ($page['body_id'] == 'theCommentsPage' OR $page['body_id'] == 'thePicturePage') {
-		set_smiliessupport_page();
+	global $page, $pwg_loaded_plugins;
+	
+	if (!isset($pwg_loaded_plugins['bbcode_bar']) 
+		AND isset($page['body_id']) AND $page['body_id'] == 'thePicturePage')
+	{
+		set_smiliessupport();
 	}
 }
 

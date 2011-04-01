@@ -25,6 +25,10 @@
 		vertical-align:top;
 		content:url('{$themeconf.admin_icon_dir}/help.png');
 	}
+	.properties textarea {ldelim}
+		width:60%;
+		margin:0 20%;
+	}
 </style>
 {/html_head}
 
@@ -49,7 +53,12 @@
 			<input type="text" size="20" name="text3" value="{$TEXT3_VALUE}" />
 		</li>
 		<li>
-			<table><tr><td>{$SMILIESSUPPORT_PAGE}</td></tr></table>
+			<table><tr>
+			{foreach from=$smiliesfiles item=smileyfile} 
+				<td><a href="#" title="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
+				{$smileyfile.TR}
+			{/foreach}
+			</tr></table>
 		</li>
     </ul>
 	</fieldset>

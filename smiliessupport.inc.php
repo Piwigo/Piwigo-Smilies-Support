@@ -1,67 +1,71 @@
 <?php
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
-function set_smiliessupport_page()
+// add smilies button to the comment field
+function set_smiliessupport()
 {
-	global $template, $lang, $pwg_loaded_plugins;
-
-	if (!isset($pwg_loaded_plugins['bbcode_bar'])) {
-		$lang['Comment'] .= SmiliesTable();
-	}
+	global $conf, $lang;
+	$conf_smiliessupport = explode(',' , $conf['smiliessupport']);
+	
+	$smilies = get_smilies($conf_smiliessupport);
+	$lang['Comment'] .= SmiliesTable($conf_smiliessupport, $smilies);	
 }
 
-function SmiliesTable($new_conf=null)
+// return an array with available smilies (name and path) ## must received the unserialized configuration array
+function get_smilies($conf_smiliessupport)
 {
-	global $conf, $template, $page;
-
-	// this is for live update on admin page
-	if (empty($new_conf)) {
-		$conf_smiliessupport = explode("," , $conf['smiliessupport']);
-	} else {
-		$conf_smiliessupport = $new_conf;
-	}
-
-	// edit field has a different id
-	if (
-		(isset($_GET['action']) AND $_GET['action'] == 'edit_comment') 
-		OR (isset($page['body_id']) AND $page['body_id'] == 'theCommentsPage')
-	) {
-		$template->assign('form_name', 'editComment');
-	} else {
-		$template->assign('form_name', 'addComment');
-	}
-
-	$cnt = 1;
-	$template->assign('SMILIES_PATH', SMILIES_PATH);
-	$template->set_filename('smiliessupport_page', dirname(__FILE__).'/template/smiliessupport_page.tpl');
-	$template->assign(array('REPRESENTANT' => PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$conf_smiliessupport[2]));
-
+	$accepted_ext = array('gif', 'jpg', 'png');
+	
 	if ($handle = opendir(PHPWG_ROOT_PATH.$conf_smiliessupport[0]))
 	{
+		$i = 1;
 		while (false !== ($file = readdir($handle)))
 		{
-			$trvalue = '';
-
-			if ($file != "." && $file != ".." && ( get_extension($file) == "gif" || get_extension($file) == "png"))
+			if ($file != '.' AND $file != '..' AND in_array(get_extension($file), $accepted_ext))
 			{
-				if (( $cnt > 0 ) && ( $cnt % $conf_smiliessupport[1] == 0 )) {
-					$trvalue = '</tr><tr>';
-				}
-				$cnt = $cnt + 1;
-				$template->append('smiliesfiles',
-				array('PATH' => PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$file,
-				'TITLE' => ':'.get_filename_wo_extension($file).':',
-				'TR'=>$trvalue));
+				$smilies[] = array(
+					'PATH' => PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$file,
+					'TITLE' => ':'.get_filename_wo_extension($file).':',
+					'TR' => ($i>0 AND $i%$conf_smiliessupport[1] == 0) ? '</tr><tr>' : null,
+				);
+				$i++;
 			}
 		}
 		
+		return $smilies;
 	} else {
-		array_push($page['errors'], l10n('opendir failed : '.PHPWG_ROOT_PATH.$conf_smiliessupport[0].')' ));
+		return false;
 	}
+}
+
+// get the smilies button ## must received the unserialized configuration array AND the smilies array
+function SmiliesTable($conf_smiliessupport, $smilies)
+{
+	global $template;
+	load_language('plugin.lang', SMILIES_PATH);
+
+	// edit field has different id
+	// if (
+		// (isset($_GET['action']) AND $_GET['action'] == 'edit_comment') 
+		// OR (isset($page['body_id']) AND $page['body_id'] == 'theCommentsPage')
+	// ) {
+		// $template->assign('form_name', 'editComment');
+	// } else {
+		// $template->assign('form_name', 'addComment');
+	// }
+	$template->assign('form_name', 'addComment');
+
+	$template->assign(array(
+		'SMILIES_PATH' => SMILIES_PATH,
+		'REPRESENTANT' => PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$conf_smiliessupport[2],
+		'smiliesfiles' => $smilies,
+	));
 	
+	$template->set_filename('smiliessupport_page', dirname(__FILE__).'/template/smiliessupport_page.tpl');
 	return $template->parse('smiliessupport_page', true);
 }
 
+// parse smilies
 function SmiliesParse($str)
 {
 	global $conf;

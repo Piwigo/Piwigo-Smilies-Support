@@ -9,25 +9,28 @@ $conf_smiliessupport = explode("," , $conf['smiliessupport']);
 if (isset($_POST['submit']))
 {
 	// the smilies.txt file is not saved if the directory is changed
-	if (isset($_POST['text1']) AND $_POST['text1'] != $conf_smiliessupport[0]) {
+	if (isset($_POST['text1']) AND $_POST['text1'] != $conf_smiliessupport[0]) 
+	{
 		$not_save_file = true;
 	}
 	
+	// new configuration
 	$conf_smiliessupport = array(
 		isset($_POST['text1']) ? $_POST['text1'] : 'plugins/SmiliesSupport/smilies_1',
 		isset($_POST['text2']) ? $_POST['text2'] : '6',
 		isset($_POST['text3']) ? $_POST['text3'] : 'smile.png',
 	);
-	
 	if (empty($_POST['text'])) $_POST['text'] = ':)		smile.png';
 		
-    $new_value_smiliessupport = implode (",", $conf_smiliessupport);
-    $query = 'UPDATE ' . CONFIG_TABLE . '
-		SET value="' . $new_value_smiliessupport . '"
-		WHERE param="smiliessupport"';
+    $new_value_smiliessupport = implode(",", $conf_smiliessupport);
+    $query = "UPDATE " . CONFIG_TABLE . "
+		SET value='" . $new_value_smiliessupport . "'
+		WHERE param='smiliessupport'";
     pwg_query($query);
-    
-	if (!isset($not_save_file)) {
+	
+	// new definitions file
+	if (!isset($not_save_file)) 
+	{
 		$smilies_file = PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/smilies.txt';	    
 
 		if (file_exists($smilies_file)) {
@@ -37,9 +40,14 @@ if (isset($_POST['submit']))
 		if (@file_put_contents($smilies_file, stripslashes($_POST['text']))) {  
 			$page['infos'][] = l10n('Information data registered in database');
 		} else {
-			$page['errors'][] = l10n('File/directory read error').' &nbsp; '.$smilies_file;
+			$page['errors'][] = l10n('File/directory read error').' : '.$smilies_file;
 		}
 	}
+}
+
+// check if the representant exists
+if (!file_exists(PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/'.$conf_smiliessupport[2])) {
+	$page['errors'][] = l10n('File/directory read error').' : '.$conf_smiliessupport[0].'/'.$conf_smiliessupport[2];
 }
 
 $template->assign(array(
@@ -48,11 +56,12 @@ $template->assign(array(
 	'TEXT3_VALUE' => $conf_smiliessupport[2],
 ));
 
+// build the table of smilies
 include_once(SMILIES_PATH . '/smiliessupport.inc.php');
-$template->assign('SMILIESSUPPORT_PAGE', SmiliesTable($conf_smiliessupport));
+$template->assign('smiliesfiles', get_smilies($conf_smiliessupport));
 
+// get the content of definitions file
 $smilies_file = PHPWG_ROOT_PATH.$conf_smiliessupport[0].'/smilies.txt';
-
 if (file_exists($smilies_file)) {
 	$content_file = file_get_contents($smilies_file);
 	$template->assign(array('CONTENT_FILE' => $content_file));
