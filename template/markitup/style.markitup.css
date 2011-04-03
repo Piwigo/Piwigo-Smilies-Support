@@ -11,6 +11,9 @@
 	color:#000;
 	text-decoration:none;
 }
+.markItUp textarea {
+	display:block;
+}
 .markItUpContainer  {
 	font:11px Verdana, Arial, Helvetica, sans-serif;
 }
@@ -69,6 +72,7 @@
 #smiliesdiv a {
 	width:auto;	height:auto;
 	border:0;
+  padding:0;
 }
 #smiliesdiv img {
 	border:1px solid transparent;

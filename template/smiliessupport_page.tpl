@@ -3,7 +3,7 @@
 
 {footer_script require='jquery'}
 {literal}
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	if (jQuery('.markItUp').length == 0) {
 		jQuery('#{/literal}{$form_name}{literal} textarea').markItUp({markupSet: []});
 	}
@@ -13,7 +13,7 @@ $(document).ready(function() {
 		jQuery('#smiliesdiv').css('display',''); 
 	});
 	jQuery('#smiliesdiv a').click(function() {
-		emoticon = jQuery(this).attr("title");
+		emoticon = jQuery(this).attr("href");
 		jQuery.markItUp({ replaceWith:emoticon });
 		jQuery('#smiliesdiv').css('display','none');
 		return false;
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	<ul id="smiliesdiv">
 		<li><table><tr>
 		{foreach from=$smiliesfiles item=smileyfile} 
-			<td><a href="#" title="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
+			<td><a href="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
 			{$smileyfile.TR}
 		{/foreach}
 		</tr></table></li>
