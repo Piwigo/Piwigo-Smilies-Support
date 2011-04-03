@@ -22,6 +22,7 @@ $(document).ready(function() {
 {/literal}
 {/footer_script}
 
+<ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
 	<a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
 
@@ -34,3 +35,4 @@ $(document).ready(function() {
 		</tr></table></li>
 	</ul>
 </li>
+</ul>
