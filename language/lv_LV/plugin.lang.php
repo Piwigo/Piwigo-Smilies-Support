@@ -4,7 +4,6 @@ $lang['smilies_dir'] = "Smailinu mape";
 $lang['nb_columns'] = "Nb. kolonas";
 $lang['representant'] = "Parstavošs";
 $lang['All Smilies'] = "Visi Smailini";
-$lang['smilies_file_help'] = "By default when a user clicks on a smiley, Smilies Support adds a keyword matching the name of the file (smile.png -> :smile:).<br>
-	But here you can configure other strings to be replaced. Each smilies folder has its own <i>smilies.txt</i> file.";
+$lang['smilies_file_help'] = "Pēc noklusēšanas, ja klikšķiniet uz smaidiņa, Smaidiņu Atbalsts (Smilies Support) pievieno ar faila (smile.png -> :smile:) nosaukumu sakrītošu atslēgvārdu.<br>      Ir iespējams nokonfigurēt arī citus variantus. Katrai smailiju mapei ir pašai savs <i>smilies.txt</i> fails.";
 
 ?>
