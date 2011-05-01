@@ -1,1 +1,1 @@
-Allow add Smilies for comments and descriptions.
+Laat smileys toe voor reacties en beschrijvingen.
