@@ -1,0 +1,1 @@
+Umożliwia dodawanie emotikonów w komentarzach i opisach.
