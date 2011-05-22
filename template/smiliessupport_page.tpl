@@ -4,35 +4,35 @@
 {footer_script require='jquery'}
 {literal}
 jQuery(document).ready(function() {
-	if (jQuery('.markItUp').length == 0) {
-		jQuery('#{/literal}{$form_name}{literal} textarea').markItUp({markupSet: []});
-	}
-	jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
-	jQuery('#allsmilies').mouseover(function(){ 
-		jQuery("#{/literal}{$form_name}{literal} textarea").focus();
-		jQuery('#smiliesdiv').css('display',''); 
-	});
-	jQuery('#smiliesdiv a').click(function() {
-		emoticon = jQuery(this).attr("href");
-		jQuery.markItUp({ replaceWith:emoticon });
-		jQuery('#smiliesdiv').css('display','none');
-		return false;
-	});
+  if (jQuery('.markItUp').length == 0) {
+    jQuery('#{/literal}{$form_name}{literal} textarea').markItUp({markupSet: []});
+  }
+  jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
+  jQuery('#allsmilies').mouseover(function(){ 
+    jQuery("#{/literal}{$form_name}{literal} textarea").focus();
+    jQuery('#smiliesdiv').css('display',''); 
+  });
+  jQuery('#smiliesdiv a').click(function() {
+    emoticon = jQuery(this).attr("href");
+    jQuery.markItUp({ replaceWith:emoticon });
+    jQuery('#smiliesdiv').css('display','none');
+    return false;
+  });
 });
 {/literal}
 {/footer_script}
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-	<a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
+  <a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
 
-	<ul id="smiliesdiv">
-		<li><table><tr>
-		{foreach from=$smiliesfiles item=smileyfile} 
-			<td><a href="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
-			{$smileyfile.TR}
-		{/foreach}
-		</tr></table></li>
-	</ul>
+  <ul id="smiliesdiv">
+    <li><table><tr>
+    {foreach from=$smiliesfiles item=smileyfile} 
+      <td><a href="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
+      {$smileyfile.TR}
+    {/foreach}
+    </tr></table></li>
+  </ul>
 </li>
 </ul>
