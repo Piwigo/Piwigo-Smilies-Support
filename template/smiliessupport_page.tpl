@@ -5,11 +5,11 @@
 {literal}
 jQuery(document).ready(function() {
   if (jQuery('.markItUp').length == 0) {
-    jQuery('#{/literal}{$form_name}{literal} textarea').markItUp({markupSet: []});
+    jQuery('#{/literal}{$smilies_textarea}{literal}').markItUp({markupSet: []});
   }
   jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
-  jQuery('#allsmilies').mouseover(function(){ 
-    jQuery("#{/literal}{$form_name}{literal} textarea").focus();
+  jQuery('#allsmilies').hover(function(){ 
+    jQuery("#{/literal}{$smilies_textarea}{literal}").focus();
     jQuery('#smiliesdiv').css('display',''); 
   });
   jQuery('#smiliesdiv a').click(function() {

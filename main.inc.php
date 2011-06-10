@@ -17,12 +17,14 @@ include_once(SMILIES_PATH.'smiliessupport.inc.php');
 add_event_handler('render_comment_content', 'SmiliesParse', 60);
 add_event_handler('loc_after_page_header', 'add_smiliessupport');
 
-function add_smiliessupport() {
+function add_smiliessupport() 
+{
   global $page, $pwg_loaded_plugins;
   
-  if (!isset($pwg_loaded_plugins['bbcode_bar']) 
-    AND isset($page['body_id']) AND $page['body_id'] == 'thePicturePage')
-  {
+  if (
+    !isset($pwg_loaded_plugins['bbcode_bar']) 
+    AND isset($page['body_id']) AND $page['body_id'] == 'thePicturePage'
+  ) {
     set_smiliessupport();
   }
 }
@@ -34,7 +36,8 @@ if (script_basename() == 'admin')
   {
     array_push($menu, array(
       'NAME' => 'Smilies Support',
-      'URL' => get_root_url().'admin.php?page=plugin-' . SMILIES_DIR));
+      'URL' => get_root_url().'admin.php?page=plugin-' . SMILIES_DIR
+    ));
     return $menu;
   }
 }
