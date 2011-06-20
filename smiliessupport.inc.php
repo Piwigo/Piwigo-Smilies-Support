@@ -100,8 +100,8 @@ function SmiliesParse($str)
       if (preg_match('#^([^\t]+)[ \t]+(.+)$#', $v, $matches)) 
       {  
         $filename = get_filename_wo_extension($matches[2]);
-        $v = '#[^"]'.preg_quote($matches[1],'/').'#';          
-        $t = '<img src="'.$conf_smiliessupport[0].'/'.$matches[2].'" alt=":'.$filename.':"/>';
+        $v = '#([^"])'.preg_quote($matches[1],'/').'#';          
+        $t = '$1<img src="'.$conf_smiliessupport[0].'/'.$matches[2].'" alt=":'.$filename.':"/>';
         $str = preg_replace($v, $t, $str);
       }
     }
