@@ -1,10 +1,10 @@
 <?php
 
-$lang['smilies_dir'] = "Smileys' folder";
-$lang['nb_columns'] = "Nb. columns";
-$lang['representant'] = "Representative";
-$lang['All Smilies'] = "All Smilies";
-$lang['smilies_file_help'] = "By default when a user clicks on a smiley, Smilies Support adds a keyword matching the name of the file (smile.png -> :smile:).<br>
-  But here you can configure other strings to be replaced. Each smilies folder has its own <i>smilies.txt</i> file.";
+$lang['smilies_dir'] = 'Smileys\' složka';
+$lang['nb_columns'] = 'Nb. sloupcu';
+$lang['representant'] = 'Vzor';
+$lang['All Smilies'] = 'Všechny Smajlíci';
+$lang['smilies_file_help'] = 'jako výchozí je když uživatel klikne na smajlík, Podpora Smajlíku vloží klícové slovo udávající význam podle názvu souboru (smile.png -> :smile:).<br>
+  Ale lze také nastavit jiné popisy k nahrazení stávajících. Každá složka se smajlíky ma vlastní <i>smilies.txt</i> soubor.';
 
 ?>
