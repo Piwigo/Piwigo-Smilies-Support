@@ -1,10 +1,10 @@
 <?php
 
-$lang['smilies_dir'] = 'Smileys\' sloka';
-$lang['nb_columns'] = 'Nb. sloupcu';
+$lang['smilies_dir'] = 'Smileys\' sloÅ¾ka';
+$lang['nb_columns'] = 'Nb. sloupcÅ¯';
 $lang['representant'] = 'Vzor';
-$lang['All Smilies'] = 'Všechny Smajlíci';
-$lang['smilies_file_help'] = 'jako vıchozí je kdy uivatel klikne na smajlík, Podpora Smajlíku vloí klícové slovo udávající vıznam podle názvu souboru (smile.png -> :smile:).<br>
-  Ale lze také nastavit jiné popisy k nahrazení stávajících. Kadá sloka se smajlíky ma vlastní <i>smilies.txt</i> soubor.';
+$lang['All Smilies'] = 'VÅ¡echny SmajlÃ­ci';
+$lang['smilies_file_help'] = 'jako vÃ½chozÃ­ je kdyÅ¾ uÅ¾ivatel klikne na smajlÃ­k, Podpora SmajlÃ­kÅ¯ vloÅ¾Ã­ klÃ­ÄovÃ© slovo udÃ¡vajÃ­cÃ­ vÃ½znam podle nÃ¡zvu souboru (smile.png -> :smile:).<br>
+  Ale lze takÃ© nastavit jinÃ© popisy k nahrazenÃ­ stÃ¡vajÃ­cÃ­ch. KaÅ¾dÃ¡ sloÅ¾ka se smajlÃ­ky ma vlastnÃ­ <i>smilies.txt</i> soubor.';
 
 ?>
