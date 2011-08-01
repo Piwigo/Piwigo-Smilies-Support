@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-  <a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
+  <a id="allsmilies" style="background-image:url({$Representative});" title="{'All Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
     <li><table><tr>

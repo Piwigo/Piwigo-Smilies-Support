@@ -41,15 +41,15 @@
       <legend>{'Configuration'|@translate}</legend>    
     <ul>      
     <li>
-      <span class="property">{'smilies_dir'|@translate}</span>
+      <span class="property">{'Smileys\' folder'|@translate}</span>
       <input type="text" size="40" name="text1" value="{$TEXT1_VALUE}" />
     </li>
     <li>
-      <span class="property">{'nb_columns'|@translate}</span>
+      <span class="property">{'Nb. columns'|@translate}</span>
       <input type="text" size="3" name="text2" value="{$TEXT2_VALUE}" />
     </li>    
     <li>
-      <span class="property">{'representant'|@translate}</span>
+      <span class="property">{'Representative'|@translate}</span>
       <input type="text" size="20" name="text3" value="{$TEXT3_VALUE}" />
     </li>
     <li>
