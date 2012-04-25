@@ -20,10 +20,10 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['All Smilies'] = 'Todos os icons smille';
-$lang['Nb. columns'] = 'Colunas nb.';
+$lang['All Smilies'] = 'Todos os icones smille';
+$lang['Nb. columns'] = 'Colunas num.';
 $lang['Representative'] = 'Representativo';
-$lang['Smileys\' folder'] = 'Directório dos icons smille';
+$lang['Smileys\' folder'] = 'Directório dos icones smille';
 $lang['smilies_file_help'] = 'Por defeito, quando um utilizador clica num icon smille,o suporte dos Smilles adiciona uma palavra chave coorrespondente ao nome do smille pretendido (smille.png->: smille :)<br>
 Mas aqui você pode configurar sequências para substituição. Cada pasta tem o seu próprio arquivo <i>smilies.txt</i>.';
 ?>
