@@ -5,11 +5,11 @@
 {literal}
 jQuery(document).ready(function() {
   if (jQuery('.markItUp').length == 0) {
-    jQuery('#{/literal}{$smilies_textarea}{literal}').markItUp({markupSet: []});
+    jQuery('#contentid').markItUp({markupSet: []});
   }
   jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
   jQuery('#allsmilies').hover(function(){ 
-    jQuery("#{/literal}{$smilies_textarea}{literal}").focus();
+    jQuery("#contentid").focus();
     jQuery('#smiliesdiv').css('display',''); 
   });
   jQuery('#smiliesdiv a').click(function() {
@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-  <a id="allsmilies" style="background-image:url({$Representative});" title="{'All Smilies'|@translate}"></a>
+  <a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
     <li><table><tr>

@@ -1,17 +1,12 @@
 {combine_script id='jquery.cluetip' require='jquery' path='themes/default/js/plugins/jquery.cluetip.js'}
 {include file='include/autosize.inc.tpl'}
 
-{footer_script require="jquery.cluetip"}
-{literal}
-  jQuery().ready(function(){
-    // Cluetip
-    jQuery('.cluetip').cluetip({
-      width: 550,
-      splitTitle: '|'
-    });
+{footer_script require="jquery.cluetip"}{literal}
+  jQuery('.cluetip').cluetip({
+    width: 550,
+    splitTitle: '|'
   });
-{/literal}
-{/footer_script}
+{/literal}{/footer_script}
 
 {html_head}
 <style type="text/css">
@@ -36,13 +31,15 @@
   <h2>Smilies Support</h2>
 </div>
 
-<form method="post" action="" class="properties" ENCTYPE="multipart/form-data"> 
+<form method="post" action="" class="properties"> 
   <fieldset>
       <legend>{'Configuration'|@translate}</legend>    
     <ul>      
     <li>
       <span class="property">{'Smileys\' folder'|@translate}</span>
-      <input type="text" size="40" name="text1" value="{$TEXT1_VALUE}" />
+      <select name="text1">
+        {html_options options=$sets selected=$TEXT1_VALUE}
+      </select>
     </li>
     <li>
       <span class="property">{'Nb. columns'|@translate}</span>
@@ -50,7 +47,9 @@
     </li>    
     <li>
       <span class="property">{'Representative'|@translate}</span>
-      <input type="text" size="20" name="text3" value="{$TEXT3_VALUE}" />
+      <select name="text3">
+        {html_options options=$smilies selected=$TEXT3_VALUE}
+      </select>
     </li>
     <li>
       <table><tr>

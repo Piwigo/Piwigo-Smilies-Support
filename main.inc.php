@@ -21,9 +21,9 @@ function add_smiliessupport()
 {
   global $page, $pwg_loaded_plugins;
   
-  if (
-    !isset($pwg_loaded_plugins['bbcode_bar']) 
-    AND isset($page['body_id']) AND $page['body_id'] == 'thePicturePage'
+  // if BBCodeBar is installed let him manage smilies
+  if ( isset($page['body_id']) AND $page['body_id'] == 'thePicturePage'
+    AND !isset($pwg_loaded_plugins['bbcode_bar'])
   ) {
     set_smiliessupport();
   }

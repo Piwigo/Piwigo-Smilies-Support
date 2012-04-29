@@ -3,22 +3,37 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 function plugin_install()
 {
-  global $conf;
+  conf_update_param('smiliessupport', 'plugins/SmiliesSupport/smilies_1,6,smile.png');
+}
 
-  if (!isset($conf['smiliessupport'])) {
-    $q = 'INSERT INTO ' . CONFIG_TABLE . ' (param,value,comment)
-      VALUES ("smiliessupport","plugins/SmiliesSupport/smilies_1,6,smile.png","Parametres SmiliesSupport");';
-    pwg_query($q);
+function plugin_activate()
+{
+  global $conf;
+  
+  if (strpos($conf['smiliessupport'],',') !== false)
+  {
+    $conf_smiliessupport = explode(',', $conf['smiliessupport']);
+    
+    switch ($conf_smiliessupport[0])
+    {
+      case 'plugins/SmiliesSupport/smilies': $conf_smiliessupport[0] = 'ipb'; break;
+      case 'plugins/SmiliesSupport/smilies_2': $conf_smiliessupport[0] = 'sylvia'; break;
+      default: $conf_smiliessupport[0] = 'crystal'; break;
+    }
+    
+    $new_smiliessupport =  array(
+      'folder'       => $conf_smiliessupport[0],
+      'cols'         => $conf_smiliessupport[1],
+      'representant' => $conf_smiliessupport[2],
+    );
+    
+    conf_update_param('smiliessupport', serialize($new_smiliessupport));
   }
 }
 
 function plugin_uninstall()
 {
-  global $conf;
-
-  if (isset($conf['smiliessupport'])) {
-    pwg_query('DELETE FROM ' . CONFIG_TABLE . ' WHERE param="smiliessupport" LIMIT 1;');
-  }
+  pwg_query('DELETE FROM ' . CONFIG_TABLE . ' WHERE param="smiliessupport" LIMIT 1;');
 }
 
 ?>
