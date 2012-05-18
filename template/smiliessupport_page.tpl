@@ -1,5 +1,7 @@
+{if not isset($BBCODE_PATH)}
 {combine_script id="markitup" require='jquery' path=$SMILIES_PATH|@cat:"template/markitup/jquery.markitup.js"}
 {combine_css path=$SMILIES_PATH|@cat:"template/markitup/style.markitup.css"}
+{/if}
 
 {footer_script require='jquery'}
 {literal}
@@ -27,12 +29,12 @@ jQuery(document).ready(function() {
   <a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
-    <li><table><tr>
+    <li><table><tr>{strip}
     {foreach from=$smiliesfiles item=smileyfile} 
       <td><a href="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
       {$smileyfile.TR}
     {/foreach}
-    </tr></table></li>
+    {/strip}</tr></table></li>
   </ul>
 </li>
 </ul>

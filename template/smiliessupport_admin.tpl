@@ -37,18 +37,18 @@
     <ul>      
     <li>
       <span class="property">{'Smileys\' folder'|@translate}</span>
-      <select name="text1">
-        {html_options options=$sets selected=$TEXT1_VALUE}
+      <select name="folder">
+        {html_options options=$sets selected=$FOLDER}
       </select>
     </li>
     <li>
       <span class="property">{'Nb. columns'|@translate}</span>
-      <input type="text" size="3" name="text2" value="{$TEXT2_VALUE}" />
+      <input type="text" size="3" name="cols" value="{$COLS}" />
     </li>    
     <li>
       <span class="property">{'Representative'|@translate}</span>
-      <select name="text3">
-        {html_options options=$smilies selected=$TEXT3_VALUE}
+      <select name="representant">
+        {html_options options=$smilies selected=$REPRESENTANT}
       </select>
     </li>
     <li>

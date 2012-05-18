@@ -16,30 +16,33 @@ $conf_smiliessupport = unserialize($conf['smiliessupport']);
 if (isset($_POST['submit']))
 {
   // the smilies.txt file is not saved if the directory is changed
-  if (isset($_POST['text1']) AND $_POST['text1'] != $conf_smiliessupport['folder']) 
+  if (isset($_POST['folder']) AND $_POST['folder'] != $conf_smiliessupport['folder']) 
   {
     $not_save_file = true;
     
-    $handle = opendir(SMILIES_PATH.'smilies/'.$_POST['text1']);
-    $i = 0;
-    while (false !== ($file = readdir($handle)))
+    if (!file_exists(SMILIES_PATH.'smilies/'.$_POST['folder'].'/'.$_POST['representant']))
     {
-      if ( $file != '.' AND $file != '..' AND in_array(get_extension($file), array('gif', 'jpg', 'png')) )
+      $handle = opendir(SMILIES_PATH.'smilies/'.$_POST['folder']);
+      $i = 0;
+      while (false !== ($file = readdir($handle)))
       {
-        $_POST['text3'] = $file;
-        closedir($handle);
-        break;
+        if ( $file != '.' AND $file != '..' AND in_array(get_extension($file), array('gif', 'jpg', 'png')) )
+        {
+          $_POST['representant'] = $file;
+          closedir($handle);
+          break;
+        }
       }
     }
   }
   
   // new configuration
   $conf_smiliessupport = array(
-    'folder' => isset($_POST['text1']) ? $_POST['text1'] : 'crystal',
-    'cols' => isset($_POST['text2']) ? $_POST['text2'] : '6',
-    'representant' => isset($_POST['text3']) ? $_POST['text3'] : 'smile.png',
+    'folder' => isset($_POST['folder']) ? $_POST['folder'] : 'crystal',
+    'cols' => isset($_POST['cols']) ? $_POST['cols'] : '6',
+    'representant' => isset($_POST['representant']) ? $_POST['representant'] : 'smile.png',
   );
-  if (empty($_POST['text'])) $_POST['text'] = ':)    smile.png';
+  if (empty($_POST['text'])) $_POST['text'] = '';
     
   conf_update_param('smiliessupport', serialize($conf_smiliessupport));
   array_push($page['infos'], l10n('Information data registered in database'));
@@ -96,9 +99,9 @@ while (false !== ($file = readdir($handle)))
 closedir($handle);
 
 $template->assign(array(
-  'TEXT1_VALUE' => $conf_smiliessupport['folder'],
-  'TEXT2_VALUE' => $conf_smiliessupport['cols'],
-  'TEXT3_VALUE' => $conf_smiliessupport['representant'],
+  'FOLDER' => $conf_smiliessupport['folder'],
+  'COLS' => $conf_smiliessupport['cols'],
+  'REPRESENTANT' => $conf_smiliessupport['representant'],
   'sets' => $sets,
   'smiliesfiles' => $smilies_table,
   'smilies' => $smilies,
@@ -106,7 +109,8 @@ $template->assign(array(
 
 // get the content of definitions file
 $smilies_file = SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/smilies.txt';
-if (file_exists($smilies_file)) {
+if (file_exists($smilies_file))
+{
   $content_file = file_get_contents($smilies_file);
   $template->assign(array('CONTENT_FILE' => $content_file));
 }
