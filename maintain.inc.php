@@ -3,7 +3,13 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 function plugin_install()
 {
-  conf_update_param('smiliessupport', 'plugins/SmiliesSupport/smilies_1,6,smile.png');
+  $new_smiliessupport =  array(
+    'folder'       => 'crystal',
+    'cols'         => '6',
+    'representant' => 'smile.png',
+  );
+  
+  conf_update_param('smiliessupport', serialize($new_smiliessupport));
 }
 
 function plugin_activate()
