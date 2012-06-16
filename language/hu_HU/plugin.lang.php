@@ -1,6 +1,6 @@
 <?php
 
-$lang['Smileys\' folder'] = 'Hangulatjelek elérési útja';
+$lang['Smileys\' folder'] = 'Hangulatjel készlet';
 $lang['Nb. columns'] = 'Oszlopok száma';
 $lang['Representative'] = 'Képviselő';
 $lang['All Smilies'] = 'Összes hangulatjel';
