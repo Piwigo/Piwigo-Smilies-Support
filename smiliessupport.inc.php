@@ -2,7 +2,7 @@
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 // add smilies button to the comment field
-function set_smiliessupport()
+function set_smiliessupport($prefilter='picture')
 {
   global $conf, $template, $page;
   
@@ -15,14 +15,14 @@ function set_smiliessupport()
     'smiliesfiles' => get_smilies($conf_smiliessupport),
   ));
   
-  $template->set_prefilter('picture', 'set_smiliessupport_prefilter');  
+  $template->set_prefilter($prefilter, 'set_smiliessupport_prefilter');  
 }
 
 function set_smiliessupport_prefilter($content, &$smarty)
 {
-  $search = '<div id="commentAdd">';
-  $replace = file_get_contents(SMILIES_PATH.'/template/smiliessupport_page.tpl').$search;
-  return str_replace($search, $replace, $content);
+  $search = '#(<div id="guestbookAdd">|<div id="commentAdd">)#';
+  $replace = file_get_contents(SMILIES_PATH.'/template/smiliessupport_page.tpl').'$1';
+  return preg_replace($search, $replace, $content);
 }
 
 // return an array with available smilies (name and path) ## must received the unserialized configuration array

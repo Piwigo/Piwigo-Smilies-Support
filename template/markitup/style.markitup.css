@@ -18,7 +18,6 @@
 .markItUpEditor {
   font:12px 'Courier New', Courier, monospace;
   padding:5px;
-  clear:both;
   overflow:auto;
 }
 .markItUpFooter {
