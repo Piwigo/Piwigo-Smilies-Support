@@ -23,6 +23,6 @@
 $lang['All Smilies'] = '所有表情';
 $lang['Smileys\' folder'] = '表情目录';
 $lang['smilies_file_help'] = '默认情况下，用户点击一个表情时，表情支持会添加一个适配表情文件名字的关键词（smile.png -> :smile:）。<br>这里你可以配置其他被替换的字符串。每个表情文件目录需要配置自己的<i>smiles.txt</i>文件。';
-$lang['Nb. columns'] = 'Nb.列';
+$lang['Nb. columns'] = '序列';
 $lang['Representative'] = '代表性的';
 ?>
