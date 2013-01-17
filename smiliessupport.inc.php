@@ -61,6 +61,7 @@ function SmiliesParse($str)
   global $conf;
 
   $conf_smiliessupport = unserialize($conf['smiliessupport']);
+  $folder = get_root_url().SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'];
   $def_path = SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/smilies.txt';
   $accepted_ext = array('gif', 'jpg', 'png');
   $str = ' '.$str;
@@ -73,7 +74,7 @@ function SmiliesParse($str)
       {
         $filename = get_filename_wo_extension($file);
         $v = ':'.$filename.':'; 
-        $s = '<img src="'.SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/'.$file.'" alt=":'.$filename.':"/>';
+        $s = '<img src="'.$folder.'/'.$file.'" alt=":'.$filename.':"/>';
         $str = str_replace($v, $s, $str);
       }
     }
@@ -91,7 +92,7 @@ function SmiliesParse($str)
       {  
         $filename = get_filename_wo_extension($matches[2]);
         $v = '#([^"])'.preg_quote($matches[1],'/').'#';          
-        $t = '$1<img src="'.SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/'.$matches[2].'" alt=":'.$filename.':"/>';
+        $t = '$1<img src="'.$folder.'/'.$matches[2].'" alt=":'.$filename.':"/>';
         $str = preg_replace($v, $t, $str);
       }
     }

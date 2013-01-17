@@ -9,8 +9,8 @@ Author: Atadilo & P@t & Mistic
 
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
-define('SMILIES_DIR' , basename(dirname(__FILE__)));
-define('SMILIES_PATH' , PHPWG_PLUGINS_PATH . SMILIES_DIR . '/');
+define('SMILIES_DIR',  basename(dirname(__FILE__)));
+define('SMILIES_PATH', PHPWG_PLUGINS_PATH . SMILIES_DIR . '/');
 
 include_once(SMILIES_PATH.'smiliessupport.inc.php');
 

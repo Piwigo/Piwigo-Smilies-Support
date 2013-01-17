@@ -26,12 +26,12 @@ jQuery(document).ready(function() {
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-  <a id="allsmilies" style="background-image:url({$REPRESENTANT});" title="{'All Smilies'|@translate}"></a>
+  <a id="allsmilies" style="background-image:url('{$ROOT_URL}{$REPRESENTANT}');" title="{'All Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
     <li><table><tr>{strip}
     {foreach from=$smiliesfiles item=smileyfile} 
-      <td><a href="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
+      <td><a href="{$smileyfile.TITLE}"><img src="{$ROOT_URL}{$smileyfile.PATH}"/></a></td>
       {$smileyfile.TR}
     {/foreach}
     {/strip}</tr></table></li>
