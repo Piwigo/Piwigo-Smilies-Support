@@ -5,21 +5,27 @@
 
 {footer_script require='jquery'}
 {literal}
-jQuery(document).ready(function() {
-  if (jQuery('.markItUp').length == 0) {
-    jQuery('#contentid').markItUp({markupSet: []});
-  }
-  jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
-  jQuery('#allsmilies').hover(function(){ 
-    jQuery("#contentid").focus();
-    jQuery('#smiliesdiv').css('display',''); 
-  });
-  jQuery('#smiliesdiv a').click(function() {
-    emoticon = jQuery(this).attr("href");
-    jQuery.markItUp({ replaceWith:emoticon });
-    jQuery('#smiliesdiv').css('display','none');
-    return false;
-  });
+if (jQuery('.markItUp').length == 0) {
+  jQuery('#{/literal}{$SMILIES_ID}{literal}').markItUp({markupSet: []});
+  jQuery('.markItUpHeader>ul').css('width', '22');
+}
+else {
+  jQuery('.markItUpHeader>ul').append('<li class="markItUpSeparator">|</li>');
+  jQuery('.markItUpHeader>ul').css('width', '+=44');
+}
+
+jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
+
+jQuery('#allsmilies').hover(function(){ 
+  jQuery('#{/literal}{$SMILIES_ID}{literal}').focus();
+  jQuery('#smiliesdiv').css('display',''); 
+});
+
+jQuery('#smiliesdiv a').click(function() {
+  emoticon = jQuery(this).attr("href");
+  jQuery.markItUp({ replaceWith:emoticon });
+  jQuery('#smiliesdiv').css('display','none');
+  return false;
 });
 {/literal}
 {/footer_script}

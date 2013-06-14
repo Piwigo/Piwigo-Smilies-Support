@@ -2,7 +2,7 @@
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 // add smilies button to the comment field
-function set_smiliessupport($prefilter='picture')
+function set_smiliessupport($prefilter='picture', $textarea_id='contentid')
 {
   global $conf, $template, $page;
   
@@ -11,6 +11,7 @@ function set_smiliessupport($prefilter='picture')
 
   $template->assign(array(
     'SMILIES_PATH' => SMILIES_PATH,
+    'SMILIES_ID' => $textarea_id,
     'REPRESENTANT' => SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/'.$conf_smiliessupport['representant'],
     'smiliesfiles' => get_smilies($conf_smiliessupport),
   ));
@@ -20,7 +21,7 @@ function set_smiliessupport($prefilter='picture')
 
 function set_smiliessupport_prefilter($content, &$smarty)
 {
-  $search = '#(<div id="guestbookAdd">|<div id="commentAdd">)#';
+  $search = '#(<div id="guestbookAdd">|<div id="commentAdd">|<div class="contact">)#';
   $replace = file_get_contents(SMILIES_PATH.'/template/smiliessupport_page.tpl').'$1';
   return preg_replace($search, $replace, $content);
 }
@@ -61,7 +62,7 @@ function SmiliesParse($str)
   global $conf;
 
   $conf_smiliessupport = unserialize($conf['smiliessupport']);
-  $folder = get_root_url().SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'];
+  $folder = get_absolute_root_url().SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'];
   $def_path = SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/smilies.txt';
   $accepted_ext = array('gif', 'jpg', 'png');
   $str = ' '.$str;
