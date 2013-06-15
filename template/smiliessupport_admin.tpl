@@ -1,71 +1,197 @@
-{combine_script id='jquery.cluetip' require='jquery' path='themes/default/js/plugins/jquery.cluetip.js'}
-{include file='include/autosize.inc.tpl'}
+{combine_script id='jquery.tokeninput' load='footer' path='themes/default/js/plugins/jquery.tokeninput.js'}
+{combine_css path=$SMILIES_PATH|cat:'template/style.css'}
 
-{footer_script require="jquery.cluetip"}{literal}
-  jQuery('.cluetip').cluetip({
-    width: 550,
-    splitTitle: '|'
-  });
+
+{footer_script}{literal}
+var data = {};
+var edit = false;
+var edited = false;
+
+// set changed
+jQuery("select[name='folder']").change(function() {
+    if (edited) {
+        var ok = confirm("{/literal}{'If you change current set you will lost every shortcuts changes.'|@translate}{literal}");
+        if (!ok) {
+            jQuery(this).val(jQuery(this).data("selected"));
+            return false;
+        }
+    }
+    
+    var image = jQuery(this).find(":selected").css("background-image");
+    jQuery(this).css("background-image", image);
+    jQuery(this).data("selected", jQuery(this).val());
+    
+    fetch();
+});
+
+// size changed
+jQuery("input[name='cols']").change(function() {
+    update();
+});
+
+// switch preview/edit
+jQuery(".edit").click(function() {
+    if (edit) {
+        $(this).html("{/literal}{'Edit shorcuts'|@translate}{literal}");
+    }
+    else {
+        $(this).html("{/literal}{'Preview'|@translate}{literal}");
+    }
+    
+    edit = !edit;
+    update();
+    return false;
+});
+
+// display edit form before submit
+jQuery("#smiliesupport").submit(function() {
+    if (!edit) jQuery(".edit").click();
+    return true;
+});
+
+/* get smilies list */
+function fetch() {
+    jQuery.ajax({
+        url: 'admin.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            action: 'ss_preview',
+            folder: jQuery("select[name='folder']").val(),
+        },
+        success: function(result) {
+            data = result;
+            edited = false;
+            update();
+        }
+    });
+}
+
+/* update preview/edit table */
+function update() {
+    var html = '';
+    
+    if (!edit) {
+        html+= '<tr>';
+        var cols = parseInt(jQuery("input[name='cols']").val());
+        var i=0;
+        
+        for (var file in data.smilies) {
+            var smiley = data.smilies[file];
+            html+= '<td><a href="#" title="'+ smiley.title +'"><img src="'+ data.path + smiley.file +'"/></a></td>';
+            if ((parseInt(i)+1)%cols == 0) html+= '</tr><tr>';
+            i++;
+        }
+        
+        html+= '</tr>';
+    }
+    else {
+    {/literal}
+        html+= '<tr>'
+            +'<th>{'Smiley'|@translate}</th>'
+            +'<th>{'Name'|@translate}</th>'
+            +'<th>{'Shortcuts'|@translate}</th>'
+          +'</tr>';
+     {literal}
+     
+        for (var file in data.smilies) {
+            var smiley = data.smilies[file];
+            html+= '<tr data-file="'+ smiley.file +'">'
+                +'<td><img src="'+ data.path + smiley.file +'"/></td>'
+                +'<td>'+ smiley.title +'</td>'
+                +'<td>'
+                  +'<select name="shortcuts['+ smiley.file +']" class="shortcuts">';
+                
+                for (var j in smiley.short) {
+                    html+= '<option value="'+ smiley.short[j] +'" selected>'+ smiley.short[j] +'</option>';
+                }
+                  
+                html+= '</select>'
+                +'</td>'
+              +'</tr>';
+        }
+    }
+    
+    jQuery("#preview").html(html);
+    
+    // init tokeninput
+    jQuery(".shortcuts").tokenInput([], {
+        hintText: '{/literal}{'Type in a new shortcut'|@translate}{literal}',
+        newText: '',
+        animateDropdown: false,
+        preventDuplicates: true,
+        caseSensitive: true,
+        allowCreation: true,
+        minChars: 2,
+        searchDelay: 10,
+        
+        onAdd: function(item) {
+            edited = true;
+            var file = $(this).parents("tr").data("file");
+            
+            if (data.smilies[file].short == null) {
+                data.smilies[file].short = [item.name];
+            }
+            else {
+                data.smilies[file].short.push(item.name);
+            }
+        },
+        onDelete: function(item) {
+          edited = true;
+          var file = $(this).parents("tr").data("file");
+          
+          for (var i in data.smilies[file].short) {
+              if (data.smilies[file].short[i] == item.name) {
+                  data.smilies[file].short.splice(i, 1);
+              }
+          }
+        },
+    });
+    
+    // prevent spaces
+    jQuery(".token-input-input-token input").keydown(function(e) {
+        if (e.keyCode == 32) {
+            return false;
+        }
+    });
+}
+
+// init
+fetch();
 {/literal}{/footer_script}
 
-{html_head}
-<style type="text/css">
-  legend .cluetip {ldelim}
-    text-align:center;
-    margin:20px 0 -10px 0;
-    font-size:1.2em;
-  }
-  .cluetip:after {ldelim}
-    margin-left:5px;
-    vertical-align:top;
-    content:url('{$themeconf.admin_icon_dir}/help.png');
-  }
-  .properties textarea {ldelim}
-    width:60%;
-    margin:0 20%;
-  }
-</style>
-{/html_head}
 
 <div class="titrePage">
   <h2>Smilies Support</h2>
 </div>
 
-<form method="post" action="" class="properties"> 
-  <fieldset>
-      <legend>{'Configuration'|@translate}</legend>    
-    <ul>      
+<form method="post" action="" class="properties" id="smiliesupport">
+
+<fieldset>
+  <legend>{'Configuration'|@translate}</legend>  
+  
+  <ul>      
     <li>
-      <span class="property">{'Smileys\' folder'|@translate}</span>
-      <select name="folder">
-        {html_options options=$sets selected=$FOLDER}
-      </select>
-    </li>
-    <li>
-      <span class="property">{'Nb. columns'|@translate}</span>
-      <input type="text" size="3" name="cols" value="{$COLS}" />
-    </li>    
-    <li>
-      <span class="property">{'Representative'|@translate}</span>
-      <select name="representant">
-        {html_options options=$smilies selected=$REPRESENTANT}
-      </select>
-    </li>
-    <li>
-      <table><tr>
-      {foreach from=$smiliesfiles item=smileyfile} 
-        <td><a href="#" title="{$smileyfile.TITLE}"><img src="{$smileyfile.PATH}"/></a></td>
-        {$smileyfile.TR}
+      <b>{'Smilies set'|@translate}</b>
+      <select name="folder" style="background-image:url('{$SMILIES_PATH}smilies/{$FOLDER}/{$SETS[$FOLDER]}');" data-selected="{$FOLDER}">
+      {foreach from=$SETS item=rep key=set}
+        <option value="{$set}" style="background-image:url('{$SMILIES_PATH}smilies/{$set}/{$rep}');" {if $set==$FOLDER}selected{/if}>{$set}</option>
       {/foreach}
-      </tr></table>
+      </select>
     </li>
-    </ul>
-  </fieldset>
+    <li>
+      <b>{'Columns'|@translate}</b>
+      <input type="text" size="2" name="cols" value="{$COLS}">
+    </li>
+  </ul>
+</fieldset>
+
+<fieldset>
+  <legend>{'Preview'|@translate}</legend>  
+  <a href="#" class="edit buttonLike">{'Edit shorcuts'|@translate}</a>
+  <table id="preview"></table>
+</fieldset>
   
-  <fieldset>
-    <legend><span class="cluetip" title="smilies.txt|{'smilies_file_help'|@translate}">smilies.txt</legend>
-    <textarea rows="5" name="text">{$CONTENT_FILE}</textarea>
-  </fieldset>  
-  
-  <p><input class="submit" type="submit" value="{'Submit'|@translate}" name="submit" /></p>
+<p class="formButtons"><input class="submit" type="submit" value="{'Submit'|@translate}" name="submit" /></p>
+
 </form>

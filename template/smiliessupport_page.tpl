@@ -3,8 +3,7 @@
 {combine_css path=$SMILIES_PATH|@cat:"template/markitup/style.markitup.css"}
 {/if}
 
-{footer_script require='jquery'}
-{literal}
+{footer_script require='jquery'}{literal}
 if (jQuery('.markItUp').length == 0) {
   jQuery('#{/literal}{$SMILIES_ID}{literal}').markItUp({markupSet: []});
   jQuery('.markItUpHeader>ul').css('width', '22');
@@ -27,12 +26,15 @@ jQuery('#smiliesdiv a').click(function() {
   jQuery('#smiliesdiv').css('display','none');
   return false;
 });
-{/literal}
-{/footer_script}
+{/literal}{/footer_script}
+
+{html_style}{literal}
+#smiliesdiv table a { width:auto; height:auto; }
+{/literal}{/html_style}
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-  <a id="allsmilies" style="background-image:url('{$ROOT_URL}{$REPRESENTANT}');" title="{'All Smilies'|@translate}"></a>
+  <a id="allsmilies" style="background-image:url('{$ROOT_URL}{$REPRESENTANT}');" title="{'Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
     <li><table><tr>{strip}

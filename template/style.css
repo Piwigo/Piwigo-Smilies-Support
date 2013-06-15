@@ -1,0 +1,20 @@
+select[name='folder'], select[name='folder'] option {
+  background-position:2px center;
+  background-repeat:no-repeat;
+  padding:2px 2px 2px 26px;
+  height:22px;
+}
+
+.token-input-list li {
+  clear:none !important;
+  padding: 1px 3px !important;
+  margin-bottom: 3px !important;
+}
+
+table#preview {
+  margin:10px 0 0 0;
+}
+
+input, select {
+  border-radius:3px;
+}

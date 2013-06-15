@@ -1,121 +1,92 @@
 <?php
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
+include_once(SMILIES_PATH.'include/functions.inc.php');
+
 global $conf, $template;
-load_language('plugin.lang', SMILIES_PATH);
-
-if (strpos($conf['smiliessupport'],',') !== false)
-{
-  include(SMILIES_PATH .'maintain.inc.php');
-  plugin_activate();
-}
-
-$conf_smiliessupport = unserialize($conf['smiliessupport']);
-
-// Enregistrement de la configuration
-if (isset($_POST['submit']))
-{
-  // the smilies.txt file is not saved if the directory is changed
-  if (isset($_POST['folder']) AND $_POST['folder'] != $conf_smiliessupport['folder']) 
-  {
-    $not_save_file = true;
-    
-    if (!file_exists(SMILIES_PATH.'smilies/'.$_POST['folder'].'/'.$_POST['representant']))
-    {
-      $handle = opendir(SMILIES_PATH.'smilies/'.$_POST['folder']);
-      $i = 0;
-      while (false !== ($file = readdir($handle)))
-      {
-        if ( $file != '.' AND $file != '..' AND in_array(get_extension($file), array('gif', 'jpg', 'png')) )
-        {
-          $_POST['representant'] = $file;
-          closedir($handle);
-          break;
-        }
-      }
-    }
-  }
-  
-  // new configuration
-  $conf_smiliessupport = array(
-    'folder' => isset($_POST['folder']) ? $_POST['folder'] : 'crystal',
-    'cols' => isset($_POST['cols']) ? $_POST['cols'] : '6',
-    'representant' => isset($_POST['representant']) ? $_POST['representant'] : 'smile.png',
-  );
-  if (empty($_POST['text'])) $_POST['text'] = '';
-    
-  conf_update_param('smiliessupport', serialize($conf_smiliessupport));
-  array_push($page['infos'], l10n('Information data registered in database'));
-  
-  // new definitions file
-  if (!isset($not_save_file)) 
-  {
-    $smilies_file = SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/smilies.txt';      
-
-    if (file_exists($smilies_file)) {
-      @copy($smilies_file, get_filename_wo_extension($smilies_file).'.bak');
-    }
-    
-    if (@!file_put_contents($smilies_file, stripslashes($_POST['text']))) {  
-      array_push($page['errors'], l10n('File/directory read error').' : '.$smilies_file);
-    }
-  }
-}
-
-// check if the representant exists
-if (!file_exists(SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/'.$conf_smiliessupport['representant'])) {
-  array_push($page['errors'], l10n('File/directory read error').' : smilies/'.$conf_smiliessupport['folder'].'/'.$conf_smiliessupport['representant']);
-}
 
 // get available sets
 $sets = array();
-$handle = opendir(SMILIES_PATH.'smilies/');
-while (false !== ($file = readdir($handle)))
+$handle = opendir(SMILIES_DIR);
+while (false !== ($folder = readdir($handle)))
 { 
-  if ( $file != '.' && $file != '..' && is_dir(SMILIES_PATH.'smilies/'.$file) )
+  if ( $folder != '.' && $folder != '..' && is_dir(SMILIES_DIR.$folder) )
   {
-    $sets[$file] = $file;
+    if (file_exists(SMILIES_DIR.$folder.'/representant.txt'))
+    {
+      $sets[$folder] = file_get_contents(SMILIES_DIR.$folder.'/representant.txt');
+    }
+    else
+    {
+      $sets[$folder] = get_first_file(SMILIES_DIR.$folder, $conf['smiliessupport']['ext']);
+    }
   }
 }
 closedir($handle);
 
-// get available smilies
-$smilies_table = $smilies = array();
-$handle = opendir(SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder']);
-$i = 1;
-while (false !== ($file = readdir($handle)))
+
+// save configuration
+if (isset($_POST['submit']))
 {
-  if ( $file != '.' AND $file != '..' AND in_array(get_extension($file), array('gif', 'jpg', 'png')) )
+  // new configuration
+  $conf['smiliessupport'] = array(
+    'folder' =>       $_POST['folder'],
+    'cols' =>         preg_match('#^([0-9]+)$#', $_POST['cols']) ? $_POST['cols'] : 6,
+    'representant' => $sets[ $_POST['folder'] ],
+  );
+  
+  conf_update_param('smiliessupport', serialize($conf['smiliessupport']));
+  array_push($page['infos'], l10n('Information data registered in database'));
+  
+  // shortcuts file
+  $used = array();
+  $content = null;
+  
+  foreach ($_POST['shortcuts'] as $file => $data)
   {
-    $smilies[$file] = $file;
-    $smilies_table[] = array(
-      'PATH' => SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/'.$file,
-      'TITLE' => ':'.get_filename_wo_extension($file).':',
-      'TR' => ($i>0 AND $i%$conf_smiliessupport['cols'] == 0) ? '</tr><tr>' : null,
-    );
-    $i++;
+    if (empty($data)) continue;
+    
+    $data = explode(',', stripslashes($data));
+    foreach ($data as $short)
+    {
+      if (array_key_exists($short, $used))
+      {
+        $page['errors'][] = sprintf(
+                              l10n('<i>%s</i>, shortcut &laquo; %s &raquo; already used for <i>%s</i>'),
+                              get_filename_wo_extension($file),
+                              $short,
+                              get_filename_wo_extension($used[ $short ])
+                              );
+      }
+      else
+      {
+        $used[ $short ] = $file;
+        $content.= $short."\t\t".$file."\n";
+      }
+    }
+  }
+
+  if (file_exists(SMILIES_DIR.$_POST['folder'].'/smilies.txt'))
+  {
+    @copy(SMILIES_DIR.$_POST['folder'].'/smilies.txt', SMILIES_DIR.$_POST['folder'].'/smilies.bak');
+  }
+  
+  if (@!file_put_contents(SMILIES_DIR.$_POST['folder'].'/smilies.txt', $content))
+  {  
+    $page['errors'][] = l10n('File/directory read error').' : '.SMILIES_DIR.$_POST['folder'].'/smilies.txt';
   }
 }
-closedir($handle);
 
+
+// template
 $template->assign(array(
-  'FOLDER' => $conf_smiliessupport['folder'],
-  'COLS' => $conf_smiliessupport['cols'],
-  'REPRESENTANT' => $conf_smiliessupport['representant'],
-  'sets' => $sets,
-  'smiliesfiles' => $smilies_table,
-  'smilies' => $smilies,
+  'FOLDER' =>       $conf['smiliessupport']['folder'],
+  'COLS' =>         $conf['smiliessupport']['cols'],
+  'SETS' =>         $sets,
+  'SMILIES_PATH' => SMILIES_PATH,
 ));
 
-// get the content of definitions file
-$smilies_file = SMILIES_PATH.'smilies/'.$conf_smiliessupport['folder'].'/smilies.txt';
-if (file_exists($smilies_file))
-{
-  $content_file = file_get_contents($smilies_file);
-  $template->assign(array('CONTENT_FILE' => $content_file));
-}
-  
-$template->assign('SMILIES_PATH', SMILIES_PATH);
+
 $template->set_filename('smiliessupport_conf', dirname(__FILE__).'/template/smiliessupport_admin.tpl');
 $template->assign_var_from_handle('ADMIN_CONTENT', 'smiliessupport_conf');
 
