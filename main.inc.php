@@ -72,7 +72,7 @@ function add_smiliessupport()
 if (script_basename() == 'admin')
 {
   add_event_handler('get_admin_plugin_menu_links', 'smiliessupport_admin_menu');
-  add_event_handler('init', 'smiliessupport_get_list');
+  add_event_handler('init', 'smiliessupport_action');
   
   function smiliessupport_admin_menu($menu) 
   {

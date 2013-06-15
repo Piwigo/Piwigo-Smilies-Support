@@ -19,38 +19,57 @@ function get_first_file($path, $ext=null)
   return null;
 }
 
-function smiliessupport_get_list()
+function smiliessupport_action()
 {
-  if (!isset($_GET['action']) || $_GET['action']!='ss_preview') return;
+  if (!isset($_GET['action'])) return;
+  if (strpos($_GET['action'], 'ss_') !== 0) return;
   
   global $conf;
   
   $folder = SMILIES_DIR . ltrim($_GET['folder'], '/') . '/';
   
-  $short = array();
-  if (file_exists($folder.'smilies.txt'))
+  if ($_GET['action'] == 'ss_reset')
   {
-    foreach (file($folder.'smilies.txt', FILE_IGNORE_NEW_LINES) as $v)
+    @unlink($folder.'smilies-custom.txt');
+    $_GET['action'] = 'ss_list';
+  }
+  
+  if ($_GET['action'] == 'ss_list')
+  {
+    $short = array();
+    if (file_exists($folder.'smilies-custom.txt'))
     {
-      if (preg_match('#^([^\s]+)[\s]+(.+)$#', trim($v), $matches)) 
+      $file = file($folder.'smilies-custom.txt', FILE_IGNORE_NEW_LINES);
+    }
+    else if (file_exists($folder.'smilies.txt'))
+    {
+      $file = file($folder.'smilies.txt', FILE_IGNORE_NEW_LINES);
+    }
+    if (!empty($file))
+    {
+      foreach ($file as $v)
       {
-        $short[ $matches[2] ][] = $matches[1];
+        if (preg_match('#^([^\s]+)[\s]+(.+)$#', trim($v), $matches)) 
+        {
+          $short[ $matches[2] ][] = $matches[1];
+        }
       }
     }
-  }
 
-  $smilies = array();
-  $handle = opendir($folder);
-  while (false !== ($file = readdir($handle)))
-  {
-    if ( $file != '.' && $file != '..' && in_array(get_extension($file), $conf['smiliessupport']['ext']) )
+    $smilies = array();
+    $handle = opendir($folder);
+    while (false !== ($file = readdir($handle)))
     {
-      $smilies[$file] = array('title'=>':'.get_filename_wo_extension($file).':', 'file'=>$file, 'short'=>@$short[$file]);
+      if ( $file != '.' && $file != '..' && in_array(get_extension($file), $conf['smiliessupport']['ext']) )
+      {
+        $smilies[$file] = array('title'=>':'.get_filename_wo_extension($file).':', 'file'=>$file, 'short'=>@$short[$file]);
+      }
     }
+    closedir($handle);
+    
+    echo json_encode(array('path'=>$folder, 'smilies'=>$smilies));
   }
-  closedir($handle);
   
-  echo json_encode(array('path'=>$folder, 'smilies'=>$smilies));
   exit;
 }
 

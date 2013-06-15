@@ -78,9 +78,17 @@ function SmiliesParse($str)
     closedir($handle);
   }
   
-  if (file_exists($folder.'smilies.txt'))
+  if (file_exists($folder.'smilies-custom.txt'))
   {
-    foreach (file($folder.'smilies.txt', FILE_IGNORE_NEW_LINES) as $v)
+    $file = file($folder.'smilies-custom.txt', FILE_IGNORE_NEW_LINES);
+  }
+  else if (file_exists($folder.'smilies.txt'))
+  {
+    $file = file($folder.'smilies.txt', FILE_IGNORE_NEW_LINES);
+  }
+  if (!empty($file))
+  {
+    foreach ($file as $v)
     {
       $v = trim($v);
       if (preg_match('#^([^\s]+)[\s]+(.+)$#', $v, $matches)) 

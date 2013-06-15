@@ -65,15 +65,10 @@ if (isset($_POST['submit']))
       }
     }
   }
-
-  if (file_exists(SMILIES_DIR.$_POST['folder'].'/smilies.txt'))
-  {
-    @copy(SMILIES_DIR.$_POST['folder'].'/smilies.txt', SMILIES_DIR.$_POST['folder'].'/smilies.bak');
-  }
   
-  if (@!file_put_contents(SMILIES_DIR.$_POST['folder'].'/smilies.txt', $content))
+  if (@!file_put_contents(SMILIES_DIR.$_POST['folder'].'/smilies-custom.txt', $content))
   {  
-    $page['errors'][] = l10n('File/directory read error').' : '.SMILIES_DIR.$_POST['folder'].'/smilies.txt';
+    $page['errors'][] = l10n('File/directory read error').' : '.SMILIES_DIR.$_POST['folder'].'/smilies-custom.txt';
   }
 }
 

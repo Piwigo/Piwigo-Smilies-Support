@@ -43,6 +43,29 @@ jQuery(".edit").click(function() {
     return false;
 });
 
+// reset defaults
+jQuery(".reset").click(function() {
+    var ok = confirm("{/literal}{'Are you sure?'|@translate}{literal}");
+    if (!ok) return false;
+    
+    jQuery.ajax({
+        url: 'admin.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            action: 'ss_reset',
+            folder: jQuery("select[name='folder']").val(),
+        },
+        success: function(result) {
+            data = result;
+            edited = false;
+            update();
+        }
+    });
+    
+    return false;
+});
+
 // display edit form before submit
 jQuery("#smiliesupport").submit(function() {
     if (!edit) jQuery(".edit").click();
@@ -56,7 +79,7 @@ function fetch() {
         type: 'GET',
         dataType: 'json',
         data: {
-            action: 'ss_preview',
+            action: 'ss_list',
             folder: jQuery("select[name='folder']").val(),
         },
         success: function(result) {
@@ -73,43 +96,62 @@ function update() {
     
     if (!edit) {
         html+= '<tr>';
+        
         var cols = parseInt(jQuery("input[name='cols']").val());
         var i=0;
         
         for (var file in data.smilies) {
             var smiley = data.smilies[file];
             html+= '<td><a href="#" title="'+ smiley.title +'"><img src="'+ data.path + smiley.file +'"/></a></td>';
-            if ((parseInt(i)+1)%cols == 0) html+= '</tr><tr>';
+            html+= (i+1)%cols==0 ? '</tr><tr>' : '';
             i++;
         }
         
         html+= '</tr>';
+        
+        jQuery(".reset").hide();
     }
     else {
     {/literal}
         html+= '<tr>'
-            +'<th>{'Smiley'|@translate}</th>'
+            +'<th></th>'
             +'<th>{'Name'|@translate}</th>'
             +'<th>{'Shortcuts'|@translate}</th>'
-          +'</tr>';
+            +'<th class="spacer"></th>'
+            +'<th></th>'
+            +'<th>{'Name'|@translate}</th>'
+            +'<th>{'Shortcuts'|@translate}</th>'
+          +'</tr>'
+          
+          +'<tr>';
      {literal}
+     
+        var i=0;
      
         for (var file in data.smilies) {
             var smiley = data.smilies[file];
-            html+= '<tr data-file="'+ smiley.file +'">'
-                +'<td><img src="'+ data.path + smiley.file +'"/></td>'
-                +'<td>'+ smiley.title +'</td>'
-                +'<td>'
-                  +'<select name="shortcuts['+ smiley.file +']" class="shortcuts">';
+            
+            html+= 
+              '<td><img src="'+ data.path + smiley.file +'"/></td>'
+              +'<td>'+ smiley.title +'</td>'
+              +'<td data-file="'+ smiley.file +'">'
+                +'<select name="shortcuts['+ smiley.file +']" class="shortcuts">';
+              
+              for (var j in smiley.short) {
+                  html+= '<option value="'+ smiley.short[j] +'" selected>'+ smiley.short[j] +'</option>';
+              }
                 
-                for (var j in smiley.short) {
-                    html+= '<option value="'+ smiley.short[j] +'" selected>'+ smiley.short[j] +'</option>';
-                }
-                  
-                html+= '</select>'
-                +'</td>'
-              +'</tr>';
+            html+= 
+                '</select>'
+              +'</td>';
+            
+            html+= (i+1)%2==0 ? '</tr><tr>' : '<td></td>';
+            i++;
         }
+        
+        html+= '</tr>';
+        
+        jQuery(".reset").show();
     }
     
     jQuery("#preview").html(html);
@@ -127,7 +169,7 @@ function update() {
         
         onAdd: function(item) {
             edited = true;
-            var file = $(this).parents("tr").data("file");
+            var file = $(this).parent("td").data("file");
             
             if (data.smilies[file].short == null) {
                 data.smilies[file].short = [item.name];
@@ -138,7 +180,7 @@ function update() {
         },
         onDelete: function(item) {
           edited = true;
-          var file = $(this).parents("tr").data("file");
+          var file = $(this).parent("td").data("file");
           
           for (var i in data.smilies[file].short) {
               if (data.smilies[file].short[i] == item.name) {
@@ -190,6 +232,7 @@ fetch();
   <legend>{'Preview'|@translate}</legend>  
   <a href="#" class="edit buttonLike">{'Edit shorcuts'|@translate}</a>
   <table id="preview"></table>
+  <a href="#" class="reset buttonLike" style="display:none;">{'Reset defaults'|@translate}</a>
 </fieldset>
   
 <p class="formButtons"><input class="submit" type="submit" value="{'Submit'|@translate}" name="submit" /></p>

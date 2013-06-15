@@ -5,16 +5,22 @@ select[name='folder'], select[name='folder'] option {
   height:22px;
 }
 
-.token-input-list li {
-  clear:none !important;
-  padding: 1px 3px !important;
-  margin-bottom: 3px !important;
+.token-input-list {
+  width:250px !important;
 }
+  .token-input-list li {
+    clear:none !important;
+    padding: 1px 3px !important;
+    margin-bottom: 3px !important;
+  }
 
 table#preview {
-  margin:10px 0 0 0;
+  margin:10px 0;
 }
+  table#preview .spacer {
+    width:30px;
+  }
 
-input, select {
+input[type=text], select, .token-input-list {
   border-radius:3px;
 }
