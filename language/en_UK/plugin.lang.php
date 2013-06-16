@@ -7,5 +7,6 @@ $lang['Smilies'] = 'Smilies';
 $lang['Edit shorcuts'] = 'Edit shorcuts';
 $lang['Reset defaults'] = 'Reset defaults';
 $lang['If you change current set you will lost every shortcuts changes.'] = 'If you change current set you will lost every shortcuts changes.';
+$lang['Type in a new shortcut'] = 'Type in a new shortcut';
 
 ?>
