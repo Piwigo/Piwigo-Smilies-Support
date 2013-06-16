@@ -230,7 +230,7 @@ fetch();
 
 <fieldset>
   <legend>{'Preview'|@translate}</legend>  
-  <a href="#" class="edit buttonLike">{'Edit shorcuts'|@translate}</a>
+  <a href="#" class="edit buttonLike">{'Edit shortcuts'|@translate}</a>
   <table id="preview"></table>
   <a href="#" class="reset buttonLike" style="display:none;">{'Reset defaults'|@translate}</a>
 </fieldset>
