@@ -26,4 +26,6 @@ $lang['Reset defaults'] = 'Сбросить настройки на "по умо
 $lang['Shortcuts'] = 'Ярлыки';
 $lang['Smilies'] = 'Смайлики';
 $lang['Smilies set'] = 'Набор смайликов';
+$lang['Edit shortcuts'] = 'Редактировать ярлыки';
+$lang['Type in a new shortcut'] = 'Печатать в новом ярлыке';
 ?>
