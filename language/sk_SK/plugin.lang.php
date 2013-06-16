@@ -27,4 +27,5 @@ $lang['Smilies'] = 'Smajlíci';
 $lang['Shortcuts'] = 'Skratky';
 $lang['Reset defaults'] = 'Obnoviť predvolené';
 $lang['Columns'] = 'Stĺpce';
+$lang['Edit shortcuts'] = 'Upraviť skratky';
 ?>
