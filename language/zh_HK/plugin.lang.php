@@ -27,4 +27,5 @@ $lang['Shortcuts'] = '捷徑';
 $lang['Smilies'] = '表情符號';
 $lang['Smilies set'] = '表情集';
 $lang['Type in a new shortcut'] = '輸入新的捷徑';
+$lang['Edit shortcuts'] = '編輯捷徑';
 ?>
