@@ -1,6 +1,7 @@
 /* common */
 .markItUp * {
-  margin:0px; padding:0px;
+  margin:0px;
+  padding:0px;
   outline:none;
 }
 .markItUp a:link,
@@ -40,7 +41,8 @@
 .markItUpHeader ul ul {
   display:none;
   position:absolute;
-  top:22px; left:0px;  
+  top:22px;
+  left:0px;  
   background:#FFF;
   border:1px solid #444;
   border-radius:5px;
@@ -52,10 +54,9 @@
 /* links */
 .markItUpHeader ul a {
   display:block;
-  width:16px; height:16px;
+  width:16px;
+  height:16px;
   text-indent:-10000px;
-  background-position:center center;
-  background-repeat:no-repeat;
   padding:2px;
   border:1px solid transparent;
 }
@@ -70,13 +71,8 @@
 
 /* smiliessupport */
 #smiliesdiv a {
-  width:auto;  height:auto;
+  width:auto;
+  height:auto;
   border:0;
   padding:0;
-}
-#smiliesdiv img {
-  border:1px solid transparent;
-}
-#smiliesdiv img:hover {
-  border-color:#08e;
 }

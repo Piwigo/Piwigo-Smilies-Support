@@ -9,8 +9,7 @@ if (jQuery('.markItUp').length == 0) {
   jQuery('.markItUpHeader>ul').css('width', '22');
 }
 else {
-  jQuery('.markItUpHeader>ul').append('<li class="markItUpSeparator">|</li>');
-  jQuery('.markItUpHeader>ul').css('width', '+=44');
+  jQuery('.markItUpHeader>ul').css('width', '+=22');
 }
 
 jQuery('#SmiliesSupport').appendTo('.markItUpHeader ul:first-child');
@@ -20,8 +19,8 @@ jQuery('#allsmilies').hover(function(){
   jQuery('#smiliesdiv').css('display',''); 
 });
 
-jQuery('#smiliesdiv a').click(function() {
-  emoticon = jQuery(this).attr("href");
+jQuery('#smiliesdiv img').click(function() {
+  emoticon = jQuery(this).attr("title");
   jQuery.markItUp({ replaceWith:emoticon });
   jQuery('#smiliesdiv').css('display','none');
   return false;
@@ -29,17 +28,25 @@ jQuery('#smiliesdiv a').click(function() {
 {/literal}{/footer_script}
 
 {html_style}{literal}
-#smiliesdiv table a { width:auto; height:auto; }
-{/literal}{/html_style}
+#SmiliesSupport table img:hover {
+  border:1px solid #08e;
+  margin:-1px;
+  border-radius:2px;
+  cursor:pointer;
+}
+#allsmilies { background-size:contain;
+{/literal}
+background-image:url('{$ROOT_URL}{$REPRESENTANT}'); }
+{/html_style}
 
 <ul style="display:none;">
 <li id="SmiliesSupport" class="markItUpButton markItUpDropMenu">
-  <a id="allsmilies" style="background-image:url('{$ROOT_URL}{$REPRESENTANT}');" title="{'Smilies'|@translate}"></a>
+  <a id="allsmilies" title="{'Smilies'|@translate}"></a>
 
   <ul id="smiliesdiv">
     <li><table><tr>{strip}
     {foreach from=$smiliesfiles item=smileyfile} 
-      <td><a href="{$smileyfile.TITLE}"><img src="{$ROOT_URL}{$smileyfile.PATH}"/></a></td>
+      <td><img src="{$ROOT_URL}{$smileyfile.PATH}" title="{$smileyfile.TITLE}"/></td>
       {$smileyfile.TR}
     {/foreach}
     {/strip}</tr></table></li>
