@@ -21,4 +21,11 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Columns'] = 'Oszlopok';
+$lang['Edit shortcuts'] = 'Gyorsbillentyűk szerkesztése';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'Ha megváltoztatja, az eddigi változások elvesznek';
+$lang['Reset defaults'] = 'Alapértelmezett visszaállítása';
+$lang['Shortcuts'] = 'Gyorsbillentyűk';
+$lang['Smilies'] = 'Hangulatjelek';
+$lang['Smilies set'] = 'Hangulatjel készlet';
+$lang['Type in a new shortcut'] = 'Írjon be egy új gyosbillentyűt';
 ?>
