@@ -23,4 +23,9 @@
 $lang['Reset defaults'] = 'Atiestatīt noklusējuma istatījumus';
 $lang['Smilies'] = 'Smailiji';
 $lang['Columns'] = 'Kolonas';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'Ja jūs izmainīsit pašreizējo komplektu, jūs zaudēsit visas īsceļu izmaiņas';
+$lang['Type in a new shortcut'] = 'Ierakstīt jaunu saīsni';
+$lang['Smilies set'] = 'Smailiji';
+$lang['Shortcuts'] = 'Saīsnes';
+$lang['Edit shortcuts'] = 'Labot saīsnes';
 ?>
