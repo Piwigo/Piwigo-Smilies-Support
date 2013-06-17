@@ -1,1 +1,1 @@
-Permitir adicionar Smilies a coment&aacute;rios e descri&ccedil;&otilde;es.
+Permitir adicionar Smilies a comentários e descrições.
