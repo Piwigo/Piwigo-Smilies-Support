@@ -27,4 +27,5 @@ $lang['Shortcuts'] = 'کلید های میانبر';
 $lang['Smilies'] = 'شکلک ها';
 $lang['Smilies set'] = 'مجموعه شکلک ها';
 $lang['Type in a new shortcut'] = 'تایپ در یک میانبر جدید';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'اگر ستِ کنونی را ویرایش کنید، همه‌ی میانبُرهایتان از بین خواهد رفت.';
 ?>
