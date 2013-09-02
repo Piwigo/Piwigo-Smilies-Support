@@ -20,12 +20,12 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['Columns'] = 'ستون';
-$lang['Edit shortcuts'] = 'ویرایش کلید های میانبر';
-$lang['Reset defaults'] = 'تنظیم مجدد پیش فرض';
-$lang['Shortcuts'] = 'کلید های میانبر';
-$lang['Smilies'] = 'شکلک ها';
-$lang['Smilies set'] = 'مجموعه شکلک ها';
-$lang['Type in a new shortcut'] = 'تایپ در یک میانبر جدید';
-$lang['If you change current set you will lost every shortcuts changes.'] = 'اگر ستِ کنونی را ویرایش کنید، همه‌ی میانبُرهایتان از بین خواهد رفت.';
+$lang['Columns'] = 'ستون‌ها';
+$lang['Edit shortcuts'] = 'ویرایش میانبرها';
+$lang['Reset defaults'] = 'بازگشت به حالتِ پیشفرض';
+$lang['Shortcuts'] = 'میانبرها';
+$lang['Smilies'] = 'شکلک‌ها';
+$lang['Smilies set'] = 'ستِ شکلک‌ها';
+$lang['Type in a new shortcut'] = 'یک میانبر تازه درست کنید';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'اگر ستِ کنونی را ویرایش کنید، همه‌ی تغییراتِ میانبرهایتان از بین خواهد رفت.';
 ?>
