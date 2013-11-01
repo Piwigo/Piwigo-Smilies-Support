@@ -21,4 +21,11 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Columns'] = 'Kolonner';
+$lang['Smilies set'] = 'Angi smilefjes';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'Hvis du endrer gjeldende sett, mistes alle snarveiendringer.';
+$lang['Edit shortcuts'] = 'Rediger snarveier';
+$lang['Reset defaults'] = 'Tilbakestill standarder';
+$lang['Shortcuts'] = 'Snarveier';
+$lang['Smilies'] = 'Smilefjes';
+$lang['Type in a new shortcut'] = 'Skriv inn en ny snarvei';
 ?>
