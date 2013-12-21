@@ -1,41 +1,44 @@
+{combine_css path='themes/default/js/plugins/jquery.tokeninput.css'}
 {combine_script id='jquery.tokeninput' load='footer' path='themes/default/js/plugins/jquery.tokeninput.js'}
+
 {combine_css path=$SMILIES_PATH|cat:'template/style.css'}
 
 
-{footer_script}{literal}
-var data = {};
-var edit = false;
-var edited = false;
+{footer_script}
+(function(){
+var data = {ldelim}},
+    edit = false,
+    edited = false;
 
 // set changed
-jQuery("select[name='folder']").change(function() {
+jQuery('select[name="folder"]').change(function() {
     if (edited) {
-        var ok = confirm("{/literal}{'If you change current set you will lost every shortcuts changes.'|@translate}{literal}");
+        var ok = confirm('{'If you change current set you will lost every shortcuts changes.'|translate|escape:javascript}');
         if (!ok) {
-            jQuery(this).val(jQuery(this).data("selected"));
+            jQuery(this).val(jQuery(this).data('selected'));
             return false;
         }
     }
     
-    var image = jQuery(this).find(":selected").css("background-image");
-    jQuery(this).css("background-image", image);
-    jQuery(this).data("selected", jQuery(this).val());
+    var image = jQuery(this).find(':selected').css('background-image');
+    jQuery(this).css('background-image', image);
+    jQuery(this).data('selected', jQuery(this).val());
     
     fetch();
 });
 
 // size changed
-jQuery("input[name='cols']").change(function() {
+jQuery('input[name="cols"]').change(function() {
     update();
 });
 
 // switch preview/edit
-jQuery(".edit").click(function() {
+jQuery('.edit').click(function() {
     if (edit) {
-        $(this).html("{/literal}{'Edit shorcuts'|@translate}{literal}");
+        $(this).html('{'Edit shorcuts'|translate|escape:javascript}');
     }
     else {
-        $(this).html("{/literal}{'Preview'|@translate}{literal}");
+        $(this).html('{'Preview'|translate|escape:javascript}');
     }
     
     edit = !edit;
@@ -44,9 +47,10 @@ jQuery(".edit").click(function() {
 });
 
 // reset defaults
-jQuery(".reset").click(function() {
-    var ok = confirm("{/literal}{'Are you sure?'|@translate}{literal}");
-    if (!ok) return false;
+jQuery('.reset').click(function() {
+    if (!confirm('{'Are you sure?'|translate|escape:javascript}')) {
+        return false;
+    }
     
     jQuery.ajax({
         url: 'admin.php',
@@ -54,7 +58,7 @@ jQuery(".reset").click(function() {
         dataType: 'json',
         data: {
             action: 'ss_reset',
-            folder: jQuery("select[name='folder']").val(),
+            folder: jQuery('select[name="folder"]').val(),
         },
         success: function(result) {
             data = result;
@@ -67,8 +71,10 @@ jQuery(".reset").click(function() {
 });
 
 // display edit form before submit
-jQuery("#smiliesupport").submit(function() {
-    if (!edit) jQuery(".edit").click();
+jQuery('#smiliesupport').submit(function() {
+    if (!edit) {
+        jQuery('.edit').click();
+    }
     return true;
 });
 
@@ -80,7 +86,7 @@ function fetch() {
         dataType: 'json',
         data: {
             action: 'ss_list',
-            folder: jQuery("select[name='folder']").val(),
+            folder: jQuery('select[name="folder"]').val(),
         },
         success: function(result) {
             data = result;
@@ -92,13 +98,12 @@ function fetch() {
 
 /* update preview/edit table */
 function update() {
-    var html = '';
+    var html = '', i=0;
     
     if (!edit) {
         html+= '<tr>';
         
-        var cols = parseInt(jQuery("input[name='cols']").val());
-        var i=0;
+        var cols = parseInt(jQuery('input[name="cols"]').val());
         
         for (var file in data.smilies) {
             var smiley = data.smilies[file];
@@ -109,24 +114,20 @@ function update() {
         
         html+= '</tr>';
         
-        jQuery(".reset").hide();
+        jQuery('.reset').hide();
     }
     else {
-    {/literal}
         html+= '<tr>'
             +'<th></th>'
-            +'<th>{'Name'|@translate}</th>'
-            +'<th>{'Shortcuts'|@translate}</th>'
+            +'<th>{'Name'|translate}</th>'
+            +'<th>{'Shortcuts'|translate}</th>'
             +'<th class="spacer"></th>'
             +'<th></th>'
-            +'<th>{'Name'|@translate}</th>'
-            +'<th>{'Shortcuts'|@translate}</th>'
+            +'<th>{'Name'|translate}</th>'
+            +'<th>{'Shortcuts'|translate}</th>'
           +'</tr>'
           
           +'<tr>';
-     {literal}
-     
-        var i=0;
      
         for (var file in data.smilies) {
             var smiley = data.smilies[file];
@@ -151,25 +152,24 @@ function update() {
         
         html+= '</tr>';
         
-        jQuery(".reset").show();
+        jQuery('.reset').show();
     }
     
-    jQuery("#preview").html(html);
+    jQuery('#preview').html(html);
     
     // init tokeninput
-    jQuery(".shortcuts").tokenInput([], {
-        hintText: '{/literal}{'Type in a new shortcut'|@translate}{literal}',
+    jQuery('.shortcuts').tokenInput([], {
+        hintText: '{'Type in a new shortcut'|translate|escape:javascript}',
         newText: '',
         animateDropdown: false,
         preventDuplicates: true,
-        caseSensitive: true,
-        allowCreation: true,
+        allowFreeTagging: true,
         minChars: 2,
         searchDelay: 10,
         
         onAdd: function(item) {
             edited = true;
-            var file = $(this).parent("td").data("file");
+            var file = $(this).parent('td').data("file");
             
             if (data.smilies[file].short == null) {
                 data.smilies[file].short = [item.name];
@@ -180,7 +180,7 @@ function update() {
         },
         onDelete: function(item) {
           edited = true;
-          var file = $(this).parent("td").data("file");
+          var file = $(this).parent('td').data("file");
           
           for (var i in data.smilies[file].short) {
               if (data.smilies[file].short[i] == item.name) {
@@ -191,7 +191,7 @@ function update() {
     });
     
     // prevent spaces
-    jQuery(".token-input-input-token input").keydown(function(e) {
+    jQuery('.token-input-input-token input').keydown(function(e) {
         if (e.keyCode == 32) {
             return false;
         }
@@ -200,7 +200,7 @@ function update() {
 
 // init
 fetch();
-{/literal}{/footer_script}
+}());{/footer_script}
 
 
 <div class="titrePage">
@@ -210,11 +210,11 @@ fetch();
 <form method="post" action="" class="properties" id="smiliesupport">
 
 <fieldset>
-  <legend>{'Configuration'|@translate}</legend>  
+  <legend>{'Configuration'|translate}</legend>  
   
   <ul>      
     <li>
-      <b>{'Smilies set'|@translate}</b>
+      <b>{'Smilies set'|translate}</b>
       <select name="folder" style="background-image:url('{$SMILIES_PATH}smilies/{$FOLDER}/{$SETS[$FOLDER]}');" data-selected="{$FOLDER}">
       {foreach from=$SETS item=rep key=set}
         <option value="{$set}" style="background-image:url('{$SMILIES_PATH}smilies/{$set}/{$rep}');" {if $set==$FOLDER}selected{/if}>{$set}</option>
@@ -222,19 +222,19 @@ fetch();
       </select>
     </li>
     <li>
-      <b>{'Columns'|@translate}</b>
+      <b>{'Columns'|translate}</b>
       <input type="text" size="2" name="cols" value="{$COLS}">
     </li>
   </ul>
 </fieldset>
 
 <fieldset>
-  <legend>{'Preview'|@translate}</legend>  
-  <a href="#" class="edit buttonLike">{'Edit shortcuts'|@translate}</a>
+  <legend>{'Preview'|translate}</legend>  
+  <a href="#" class="edit buttonLike">{'Edit shortcuts'|translate}</a>
   <table id="preview"></table>
-  <a href="#" class="reset buttonLike" style="display:none;">{'Reset defaults'|@translate}</a>
+  <a href="#" class="reset buttonLike" style="display:none;">{'Reset defaults'|translate}</a>
 </fieldset>
   
-<p class="formButtons"><input class="submit" type="submit" value="{'Submit'|@translate}" name="submit" /></p>
+<p class="formButtons"><input class="submit" type="submit" value="{'Submit'|translate}" name="submit" /></p>
 
 </form>
