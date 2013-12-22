@@ -15,7 +15,7 @@ class SmiliesSupport_maintain extends PluginMaintain
   {
     global $conf;
     
-    if (isset($conf['smiliessupport']))
+    if (!isset($conf['smiliessupport']))
     {
       $conf['smiliessupport'] = serialize($this->default_conf);
 
