@@ -27,7 +27,7 @@ if (defined('IN_ADMIN'))
   add_event_handler('init', 'smiliessupport_action');
   add_event_handler('get_admin_plugin_menu_links', 'smiliessupport_admin_menu');
 }
-else
+else if (!mobile_theme())
 {
   add_event_handler('loc_after_page_header', 'add_smiliessupport', EVENT_HANDLER_PRIORITY_NEUTRAL+2);
 }
