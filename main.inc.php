@@ -13,8 +13,6 @@ define('SMILIES_ID',      basename(dirname(__FILE__)));
 define('SMILIES_PATH',    PHPWG_PLUGINS_PATH . SMILIES_ID . '/');
 define('SMILIES_DIR',     SMILIES_PATH . 'smilies/');
 define('SMILIES_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SMILIES_ID);
-define('SMILIES_VERSION', 'auto');
-
 
 include_once(SMILIES_PATH.'include/functions.inc.php');
 include_once(SMILIES_PATH.'include/events.inc.php');
@@ -40,11 +38,7 @@ function init_smiliessupport()
 {
   global $conf;
   
-  include_once(SMILIES_PATH . 'maintain.inc.php');
-  $maintain = new SmiliesSupport_maintain(SMILIES_ID);
-  $maintain->autoUpdate(SMILIES_VERSION, 'install');
-  
-  $conf['smiliessupport'] = unserialize($conf['smiliessupport']);
+  $conf['smiliessupport'] = safe_unserialize($conf['smiliessupport']);
   $conf['smiliessupport_ext'] = array('gif', 'jpg', 'png', 'GIF', 'JPG', 'PNG');
   
   load_language('plugin.lang', SMILIES_PATH);

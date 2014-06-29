@@ -31,11 +31,11 @@ if (isset($_POST['submit']))
   // new configuration
   $conf['smiliessupport'] = array(
     'folder' =>       $_POST['folder'],
-    'cols' =>         preg_match('#^([0-9]+)$#', $_POST['cols']) ? $_POST['cols'] : 6,
+    'cols' =>         preg_match('#^[0-9]+$#', $_POST['cols']) ? $_POST['cols'] : 6,
     'representant' => $sets[ $_POST['folder'] ],
   );
   
-  conf_update_param('smiliessupport', serialize($conf['smiliessupport']));
+  conf_update_param('smiliessupport', $conf['smiliessupport']);
   $page['infos'][] = l10n('Information data registered in database');
   
   // shortcuts file
