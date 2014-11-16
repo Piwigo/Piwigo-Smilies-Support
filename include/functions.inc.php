@@ -1,5 +1,5 @@
 <?php
-defined('SMILIES_ID') or die('Hacking attempt!');
+defined('SMILIES_PATH') or die('Hacking attempt!');
 
 // return an array with available smilies (name and path)
 function get_smilies()

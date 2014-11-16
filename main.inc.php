@@ -9,10 +9,20 @@ Author: Atadilo & P@t & Mistic
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
-define('SMILIES_ID',      basename(dirname(__FILE__)));
-define('SMILIES_PATH',    PHPWG_PLUGINS_PATH . SMILIES_ID . '/');
-define('SMILIES_DIR',     SMILIES_PATH . 'smilies/');
-define('SMILIES_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SMILIES_ID);
+if (basename(dirname(__FILE__)) != 'SmiliesSupport')
+{
+  add_event_handler('init', 'smiliessupport_error');
+  function smiliessupport_error()
+  {
+    global $page;
+    $page['errors'][] = 'Smilies Support folder name is incorrect, uninstall the plugin and rename it to "SmiliesSupport"';
+  }
+  return;
+}
+
+define('SMILIES_PATH',  PHPWG_PLUGINS_PATH . 'SmiliesSupport/');
+define('SMILIES_DIR',   SMILIES_PATH . 'smilies/');
+define('SMILIES_ADMIN', get_root_url() . 'admin.php?page=plugin-SmiliesSupport');
 
 include_once(SMILIES_PATH.'include/functions.inc.php');
 include_once(SMILIES_PATH.'include/events.inc.php');

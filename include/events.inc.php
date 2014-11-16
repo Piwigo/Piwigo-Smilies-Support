@@ -1,5 +1,5 @@
 <?php
-defined('SMILIES_ID') or die('Hacking attempt!');
+defined('SMILIES_PATH') or die('Hacking attempt!');
 
 function smiliessupport_admin_menu($menu) 
 {
