@@ -21,11 +21,10 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['Columns'] = 'Spalten';
-$lang['Edit shortcuts'] = 'Verknüpfung editieren';
-$lang['If you change current set you will lost every shortcuts changes.'] = 'Wenn sie das derzeitige Set ändern verlieren sie alle Änderungen an den Verknüpfungen.';
-$lang['Reset defaults'] = 'Auf Standard Werte zurück setzen';
-$lang['Shortcuts'] = 'Verknüpfung';
+$lang['Edit shortcuts'] = 'Verknüpfungen bearbeiten';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'Wenn sie die derzeitige Zusammenstellung ändern, verlieren sie sämtliche Änderungen an den Verknüpfungen.';
+$lang['Reset defaults'] = 'Auf Standard-Werte zurück setzen';
+$lang['Shortcuts'] = 'Verknüpfungen';
 $lang['Smilies'] = 'Smilies';
-$lang['Smilies set'] = 'Smilies Set';
-$lang['Type in a new shortcut'] = 'Eine neue Verknüpfung eingeben';
-?>
+$lang['Smilies set'] = 'Smilies-Zusammenstellung';
+$lang['Type in a new shortcut'] = 'Eine neuen Kurzbefehl eingeben';
