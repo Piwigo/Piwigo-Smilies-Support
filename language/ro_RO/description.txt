@@ -1,0 +1,1 @@
+Permite adaugarea de Smiley-uri in comentarii si descrieri.
