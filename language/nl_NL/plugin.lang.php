@@ -22,10 +22,9 @@
 // +-----------------------------------------------------------------------+
 $lang['Columns'] = 'Kolommen';
 $lang['Edit shortcuts'] = 'Bewerk sneltoetsen';
-$lang['If you change current set you will lost every shortcuts changes.'] = 'Als je de huidige reeks verandet, zullen de gewijzigde sneltoetsen verloren gaan.';
+$lang['If you change current set you will lost every shortcuts changes.'] = 'Als je de huidige reeks verandert, gaan de gewijzigde sneltoetsen verloren.';
 $lang['Reset defaults'] = 'Herstel standaard-instellingen';
 $lang['Shortcuts'] = 'Sneltoetsen';
 $lang['Smilies'] = 'Smilies';
 $lang['Smilies set'] = 'Smilies reeks';
 $lang['Type in a new shortcut'] = 'Geef een nieuwe sneltoets in';
-?>
