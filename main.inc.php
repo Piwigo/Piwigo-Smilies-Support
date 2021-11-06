@@ -5,6 +5,7 @@ Version: auto
 Description: Allow add Smilies for comments and descriptions.
 Plugin URI: auto
 Author: Atadilo & P@t & Mistic
+Has Settings: true
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
